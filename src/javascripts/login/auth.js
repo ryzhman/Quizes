@@ -1,17 +1,16 @@
-/**
- * Created by Олександр on 09.01.2017.
- */
-"use strict";
-let users = require('../data/users.js');
+'use strict';
+import users from '../data/users.js';
+import adminRole from '../admin/adminAuth';
+import userRole from '../quiz/userAuth';
 
-let auth = {
-    validateCredentials: function (event) {
+var auth = {
+    validateCredentials: function(event) {
         event.preventDefault(); //prevent page from reloading
-        let login = document.getElementById("login").value;
-        let pass = document.getElementById("pass").value;
+        var login = document.getElementById("login").value;
+        var pass = document.getElementById("pass").value;
 
-        if (login !== null && login !== undefined && pass !== null && pass !== undefined) {
-            let user = validateLogin(login);
+        if (login != null && login != undefined && pass != null && pass != undefined) {
+            var user = validateLogin(login);
             if (user !== null) {
                 validatePass(user, pass);
             } else {
@@ -22,9 +21,9 @@ let auth = {
 };
 
 function validateLogin(login) {
-    let usersList = users.getUsers();
-    let user = null;
-    for (let i = 0; i < usersList.length; i++) {
+    var usersList = users.getUsers();
+    var user = null;
+    for (var i = 0; i < usersList.length; i++) {
         if (login === usersList[i].name) {
             user = usersList[i];
             break;
@@ -48,12 +47,12 @@ function validateFail() {
 }
 
 function validateSuccess(user) {
-    console.log(user);
-    /*if(user.group === 'admin'){
-     window.location.href="./src/tmpl/admin.html";
-     } else if (user.group === 'client') {
-     window.location.href="./src/tmpl/userProfile.html";
-     }*/
+    if (user.group === 'admin') {
+        adminRole.authAsAdmin(user);
+    } else if (user.group === 'client') {
+        userRole.authAsUser(user);
+    }
 }
+
 
 module.exports = auth;

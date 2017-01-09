@@ -14,6 +14,10 @@ module.exports = {
         ],
         loaders: [
             {
+                test: /\.html$/,
+                loader: "html"
+            },
+            {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 // exclude: /node_modules/,
@@ -21,6 +25,11 @@ module.exports = {
                     presets: ['es2015', 'react']
                 }
             }
-        ]
+        ],
+        resolve: {
+            alias: {
+                handlebars: 'handlebars/dist/Handlebars.min.js'
+            }
+        },
     }
 };

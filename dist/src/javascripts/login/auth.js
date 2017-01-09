@@ -1,9 +1,18 @@
-/**
- * Created by Олександр on 09.01.2017.
- */
-"use strict";
+'use strict';
 
-var users = require('../data/users.js');
+var _users = require('../data/users.js');
+
+var _users2 = _interopRequireDefault(_users);
+
+var _adminAuth = require('../admin/adminAuth');
+
+var _adminAuth2 = _interopRequireDefault(_adminAuth);
+
+var _userAuth = require('../quiz/userAuth');
+
+var _userAuth2 = _interopRequireDefault(_userAuth);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var auth = {
     validateCredentials: function validateCredentials(event) {
@@ -11,7 +20,7 @@ var auth = {
         var login = document.getElementById("login").value;
         var pass = document.getElementById("pass").value;
 
-        if (login !== null && login !== undefined && pass !== null && pass !== undefined) {
+        if (login != null && login != undefined && pass != null && pass != undefined) {
             var user = validateLogin(login);
             if (user !== null) {
                 validatePass(user, pass);
@@ -23,7 +32,7 @@ var auth = {
 };
 
 function validateLogin(login) {
-    var usersList = users.getUsers();
+    var usersList = _users2.default.getUsers();
     var user = null;
     for (var i = 0; i < usersList.length; i++) {
         if (login === usersList[i].name) {
@@ -49,12 +58,11 @@ function validateFail() {
 }
 
 function validateSuccess(user) {
-    console.log(user);
-    /*if(user.group === 'admin'){
-     window.location.href="./src/tmpl/admin.html";
-     } else if (user.group === 'client') {
-     window.location.href="./src/tmpl/userProfile.html";
-     }*/
+    if (user.group === 'admin') {
+        _adminAuth2.default.authAsAdmin(user);
+    } else if (user.group === 'client') {
+        _userAuth2.default.authAsUser(user);
+    }
 }
 
 module.exports = auth;
