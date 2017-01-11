@@ -12,6 +12,10 @@ var _userAuth = require('../quiz/userAuth');
 
 var _userAuth2 = _interopRequireDefault(_userAuth);
 
+var _pageRenderer = require('../pageRenderer');
+
+var _pageRenderer2 = _interopRequireDefault(_pageRenderer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var auth = {
@@ -59,9 +63,11 @@ function validateFail() {
 
 function validateSuccess(user) {
     if (user.group === 'admin') {
-        _adminAuth2.default.authAsAdmin(user);
+        var dataForAdmin = _pageRenderer2.default.config[user.group].data;
+        _adminAuth2.default.authAsAdmin(user, dataForAdmin);
     } else if (user.group === 'client') {
-        _userAuth2.default.authAsUser(user);
+        var dataForUser = _pageRenderer2.default.config[user.group].data;
+        _userAuth2.default.authAsUser(user, dataForUser);
     }
 }
 

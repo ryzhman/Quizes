@@ -2,9 +2,10 @@
 import users from '../data/users.js';
 import adminRole from '../admin/adminAuth';
 import userRole from '../quiz/userAuth';
+import renderer from '../pageRenderer';
 
 var auth = {
-    validateCredentials: function(event) {
+    validateCredentials: function (event) {
         event.preventDefault(); //prevent page from reloading
         var login = document.getElementById("login").value;
         var pass = document.getElementById("pass").value;
@@ -48,9 +49,11 @@ function validateFail() {
 
 function validateSuccess(user) {
     if (user.group === 'admin') {
-        adminRole.authAsAdmin(user);
+        var dataForAdmin = renderer.config[user.group].data;
+        adminRole.authAsAdmin(user, dataForAdmin);
     } else if (user.group === 'client') {
-        userRole.authAsUser(user);
+        var dataForUser = renderer.config[user.group].data;
+        userRole.authAsUser(user, dataForUser);
     }
 }
 
