@@ -1,4 +1,5 @@
 "use strict";
+
 module.exports = {
 	getUsers: getUsers
 };
@@ -7,6 +8,7 @@ module.exports = {
 function getUsers() {
 	return [
 		{
+			id: 0,
 			name: "user",
 			pass: "user",
 			access: "limited",
@@ -14,7 +16,8 @@ function getUsers() {
 			group: 'client'
 		},
 		{
-			name: "admin",
+            id: 1,
+            name: "admin",
 			pass: "admin",
 			access: "unlimited",
 			lastVisit: new Date().toString(),

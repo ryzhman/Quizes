@@ -24,7 +24,7 @@ var auth = {
         var login = document.getElementById("login").value;
         var pass = document.getElementById("pass").value;
 
-        if (login != null && login != undefined && pass != null && pass != undefined) {
+        if (login !== null && login !== undefined && pass !== null && pass !== undefined) {
             var user = validateLogin(login);
             if (user !== null) {
                 validatePass(user, pass);

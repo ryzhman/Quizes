@@ -6,12 +6,14 @@ module.exports = {
 
 function getUsers() {
 	return [{
+		id: 0,
 		name: "user",
 		pass: "user",
 		access: "limited",
 		lastVisit: new Date().toString(),
 		group: 'client'
 	}, {
+		id: 1,
 		name: "admin",
 		pass: "admin",
 		access: "unlimited",

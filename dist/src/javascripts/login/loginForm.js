@@ -75,7 +75,7 @@ function createForm() {
         passForm(parentAndLoginForm);
         createSubmitButton(parentAndLoginForm);
     }
-};
+}
 
 module.exports = {
     createLoginForm: createForm
