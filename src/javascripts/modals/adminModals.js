@@ -14,12 +14,12 @@ const createNewUserModal = () => html`
                 <p><label>Name<strong>*</strong><br>
                     <input type="text" autofocus required id="name" minlength="6" value="" placeholder="Enter username here..." class="inputs"></label></p>
                 <p><label>Password<strong>*</strong><br>
-                    <input id="pswd1" type="password" placeholder="Enter password here..." minlength="10" height="48" id="description" value="" class="inputs"></label></p>
+                    <input id="pswd1" type="password" required placeholder="Enter password here..." minlength="3" height="48" value="" class="inputs"></label></p>
                 <p><label>Repeat password<strong>*</strong><br>
-                    <input id="pswd2" type="password" placeholder="Enter password once more..." minlength="10" height="48" id="description" value="" class="inputs"></label>
+                    <input id="pswd2" type="password" required placeholder="Enter password once more..." minlength="3" height="48" value="" class="inputs"></label>
                     <div id="pswdDoesntMatch"></div></p>
                 <p><label>Group<br>
-                    <select name="groups" form="selectGroup">
+                    <select id="groups" form="selectGroup">
                       <option value="admin">Admins</option>
                       <option value="user">Users</option>
                     </select>
@@ -81,9 +81,16 @@ let closeModal = function (e) {
     e.preventDefault ? e.preventDefault() : e.returnValue = false;
 };
 
+let cleanUpFields = () => {
+    $('#name').val("");
+    $('#pswd1').val("");
+    $('#pswd2').val("");
+};
+
 module.exports = {
     createNewUserModal,
     addOpenEventListener,
     addCloseEventListener,
     addKeyAndClickEventListener,
+    cleanUpFields,
 };

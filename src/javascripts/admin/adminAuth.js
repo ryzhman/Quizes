@@ -37,10 +37,11 @@ let removeUser = (event) => {
     refreshPage();
 };
 
-let addNewUser = () => {
+let addNewUser = (event) => {
+    event.preventDefault();
     let newUsr = document.getElementById("name").value;
     let pswd = document.getElementById("pswd1").value;
-    let group = document.getElementById("groups").value;
+    let group = $("#groups").val();
 
     // let maxNumber = Math.max.apply(Math, listOfTodos.map(function (o) {
     //     return o.priority;
@@ -50,18 +51,15 @@ let addNewUser = () => {
     // }
     let newUser = {
         "name": newUsr,
-        "priority": pswd,
-        "description": group,
-        "access": group === 'admin' ? 'unlimited' : 'limited'
+        "pass": pswd,
+        "group": group,
     };
+    newUser["access"] = (group === 'admin' ? 'unlimited' : 'limited');
+    console.log(newUser);
     usersList.push(newUser);
 
     refreshPage();
-
-    document.getElementById("name").value = "";
-    document.getElementById("pswd1").value = "";
-    document.getElementById("pswd2").value = "";
-    document.getElementById("groups").value = "";
+    modals.cleanUpFields();
     window.open(location, '_self', '');
     window.close();
     return false;
@@ -97,7 +95,7 @@ function authAsAdmin(user, data) {
     modals.addCloseEventListener();
     modals.addKeyAndClickEventListener();
 
-    // document.getElementById("add_user").addEventListener("submit", addNewUser, false);
+    document.getElementById("add_user").addEventListener("submit", addNewUser, false);
     document.addEventListener("DOMContentLoaded", modals.modal_init, false);
     $(document).ready(function () {
         $("#pswd1, #pswd2").keyup(checkPasswordMatch);
@@ -108,7 +106,11 @@ function authAsAdmin(user, data) {
 
 let refreshPage = () => {
     let bodyDiv = document.getElementById("bodyDiv");
-    $(bodyDiv).html(usersListTmpl(usersList) + "\n\n" + quizesListTmpl(quizesList));
+    $(bodyDiv).html(modals.createNewUserModal() +
+        adminTmpl.usersListTmpl(usersList) +
+        adminTmpl.createAddUserButton() +
+        "\n\n"
+        + adminTmpl.quizesListTmpl(quizesList));
 };
 
 
