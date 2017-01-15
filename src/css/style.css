@@ -58,7 +58,7 @@ caption{
     text-align: right;
 }
 
-#modal_wrapper.overlay:before {
+#modalWrapperUser.overlay:before, #modalWrapperQuiz.overlay:before{
     content: " ";
     width: 100%;
     height: 100%;
@@ -70,7 +70,7 @@ caption{
     background: rgba(0,0,0,0.7);
 }
 
-#modal_window {
+#modalWindowUser, #modalWindowQuiz{
     display: none;
     z-index: 200;
     position: fixed;
@@ -89,6 +89,10 @@ caption{
     width:60%
 }
 
-#modal_wrapper.overlay #modal_window {
+#modalWrapperUser.overlay #modalWindowUser{
+    display: block;
+}
+
+#modalWrapperQuiz.overlay #modalWindowQuiz{
     display: block;
 }

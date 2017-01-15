@@ -69,7 +69,13 @@ const quizesListTmpl = qList => html`
 
 const createAddUserButton = () => html`
     <p>
-    <button id="modal_open">Add user</button>
+    <button id="modalUser_open">Add user</button>
+    </p>
+`;
+
+const createAddQuizButton = () => html`
+    <p>
+    <button id="modalQuiz_open">Add quiz</button>
     </p>
 `;
 
@@ -78,4 +84,5 @@ module.exports = {
     createAddUserButton,
     quizesListTmpl,
     adminWelcomeInfo,
+    createAddQuizButton
 };

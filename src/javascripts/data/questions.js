@@ -7,7 +7,7 @@ module.exports = {
     getQuestions: getQuestions
 };
 
-const type = ["OA", "OQ", "MA"];
+const type = ["opt", "open", "multiple"];
 
 function getQuestions() {
     return [

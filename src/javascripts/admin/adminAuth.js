@@ -5,8 +5,10 @@ import $ from "jquery";
 import modals from "../modals/adminModals";
 import adminTmpl from "../../templates/admin/adminTmpl";
 
-let modalWrapper;
-let modalWindow;
+let modalWrapperUser;
+let modalWrapperQuiz;
+let modalWindowUser;
+let modalWindowQuiz;
 let usersList;
 let quizesList;
 
@@ -55,7 +57,6 @@ let addNewUser = (event) => {
         "group": group,
     };
     newUser["access"] = (group === 'admin' ? 'unlimited' : 'limited');
-    console.log(newUser);
     usersList.push(newUser);
 
     refreshPage();
@@ -83,15 +84,22 @@ function authAsAdmin(user, data) {
         adminTmpl.usersListTmpl(usersList) +
         adminTmpl.createAddUserButton() +
         "\n\n"
-        + adminTmpl.quizesListTmpl(quizesList));
+        + adminTmpl.quizesListTmpl(quizesList) +
+        modals.createNewQuizModal() +
+        adminTmpl.createAddQuizButton()
+    );
 
-    modalWrapper = $('#modal_wrapper')[0];
-    modalWindow = $('#modal_window')[0];
+    // modalWrapperUser = $('#modalWrapperUser')[0];
+    // modalWrapperQuiz = $('#modalWrapperQuiz')[0];
+    // modalWindowUser = $('#modalWindowUser')[0];
+    // modalWindowQuiz = $('#modalWindowQuiz')[0];
 
     createRemoveQuizButton();
     createRemoveUserButton();
 
-    modals.addOpenEventListener();
+    modals.addOpenUserEventListener();
+    modals.addOpenQuizEventListener();
+    modals.addEventListenerOpts();
     modals.addCloseEventListener();
     modals.addKeyAndClickEventListener();
 

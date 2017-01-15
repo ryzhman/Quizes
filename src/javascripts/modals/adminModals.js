@@ -6,8 +6,8 @@ import $ from "jquery";
 import html from "html-template-tag";
 
 const createNewUserModal = () => html`
-    <div id="modal_wrapper">
-        <div id="modal_window">
+    <div id="modalWrapperUser">
+        <div id="modalWindowUser">
             <div id="modalWindowHeader"><a id="modal_close">close <b>X</b></a></div>
             <p>Enter new user details:</p>
             <form id="add_user" action="#">
@@ -29,8 +29,86 @@ const createNewUserModal = () => html`
     </div>
 `;
 
-let addOpenEventListener = () => {
-    $('#modal_open')[0].addEventListener("click", openModal, false);
+const createNewQuizModal = () => html`
+    <div id="modalWrapperQuiz">
+        <div id="modalWindowQuiz">
+            <div id="modalWindowHeader"><a id="modal_close">close <b>X</b></a></div>
+            <p>Enter new quiz details:</p>
+            <form id="add_quiz" action="#">
+                <p><label>Question<strong>*</strong><br>
+                    <input type="text" autofocus required id="question" minlength="6" value="" placeholder="Enter question text here..." class="inputs"></label></p>
+                <p><label>Type<br>
+                    <select id="types" form="selectType">
+                      <option selected disabled>Choose here</option>
+                      <option value="opt">Options</option>
+                      <option value="open">Open question</option>
+                      <option value="multiple">Multiple answers</option>
+                    </select>
+                </label></p>
+                <p id="options"><label>Options</label>
+                </p>
+                <p><input type="submit" value="Add quiz"></p>
+            </form>
+        </div>
+    </div>
+`;
+
+let addEventListenerOpts = () => {
+    $('#types')[0].addEventListener("change", renderOptionsForm, false);
+};
+
+let addEventListenersChooseOpt = () => {
+    if ($('numOfOptions')) {
+        $('#numOfOptions').change(renderNumOfOptions);
+    }
+    if ($('numOfOptionsMultiple')) {
+        $('#numOfOptionsMultiple').change(renderNumOfOptionsMultiple);
+    }
+};
+
+let renderOptionsForm = () => {
+    let selectedOpt = $('#types').val();
+    let htmlToInsert;
+    if (selectedOpt === "opt") {
+        htmlToInsert = () => html`
+            <input id="numOfOptions" type="text" required placeholder="Enter number of options here..." minvalue="1" height="48" value="" class="inputs">
+        `;
+    } else if (selectedOpt === "open") {
+        htmlToInsert = () =>
+            html`
+            <input id="open" type ="text" required placeholder="Enter answer here..." minLength="3" height="48" value="" class="inputs">
+        `;
+    } else {
+        htmlToInsert = () => html`
+            <input id="numOfOptionsMultiple" type="text" required placeholder="Enter number of options here..." minvalue="1" height="48" value="" class="inputs">
+        `;
+    }
+    addEventListenersChooseOpt();
+    $('#options').html(htmlToInsert());
+};
+
+let renderNumOfOptions = () => {
+    console.log($('numOfOptions').val());
+    let numOfOptions = $('numOfOptions').val();
+    for (let i = 1; i < numOfOptions; i++) {
+        $('#options').append('<input id="opt +' + i + '" required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs">');
+    }
+};
+
+let renderNumOfOptionsMultiple = () => {
+    console.log($('numOfOptionsMultiple').val());
+    let numOfOptions = $('numOfOptionsMultiple').val();
+    for (let i = 1; i < numOfOptions; i++) {
+        $('#options').append('<input id="opt +' + i + '" required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs">');
+    }
+};
+
+let addOpenUserEventListener = () => {
+    $('#modalUser_open')[0].addEventListener("click", openModalUser, false);
+};
+
+let addOpenQuizEventListener = () => {
+    $('#modalQuiz_open')[0].addEventListener("click", openModalQuiz, false);
 };
 
 let addCloseEventListener = () => {
@@ -56,15 +134,29 @@ let keyHandler = function (event) {
 let clickHandler = function (e) {
     if (!e.target) e.target = e.srcElement;
     if (e.target.tagName == "DIV") {
-        if (e.target.id != "modal_window") {
+        if (e.target.id !== "modalWindowUser" && e.target.id !== "modalWindowQuiz") {
             closeModal(e);
         }
     }
 };
 
-let openModal = function (e) {
-    let modalWrapper = $('#modal_wrapper')[0];
-    let modalWindow = $('#modal_window')[0];
+let openModalUser = function (e) {
+    let modalWrapper = $('#modalWrapperUser')[0];
+    let modalWindow = $('#modalWindowUser')[0];
+
+    modalWrapper.className = "overlay";
+    let overflow = modalWindow.offsetHeight - document.documentElement.clientHeight;
+    if (overflow > 0) {
+        modalWindow.style.maxHeight = (parseInt(window.getComputedStyle(modalWindow).height) - overflow) + "px";
+    }
+    modalWindow.style.marginTop = (-modalWindow.offsetHeight) / 2 + "px";
+    modalWindow.style.marginLeft = (-modalWindow.offsetWidth) / 2 + "px";
+    e.preventDefault ? e.preventDefault() : e.returnValue = false;
+};
+
+let openModalQuiz = function (e) {
+    let modalWrapper = $('#modalWrapperQuiz')[0];
+    let modalWindow = $('#modalWindowQuiz')[0];
 
     modalWrapper.className = "overlay";
     let overflow = modalWindow.offsetHeight - document.documentElement.clientHeight;
@@ -77,7 +169,8 @@ let openModal = function (e) {
 };
 
 let closeModal = function (e) {
-    $('#modal_wrapper')[0].className = "";
+    $('#modalWrapperUser')[0].className = "";
+    $('#modalWrapperQuiz')[0].className = "";
     e.preventDefault ? e.preventDefault() : e.returnValue = false;
 };
 
@@ -89,8 +182,11 @@ let cleanUpFields = () => {
 
 module.exports = {
     createNewUserModal,
-    addOpenEventListener,
+    createNewQuizModal,
+    addOpenUserEventListener,
+    addOpenQuizEventListener,
     addCloseEventListener,
     addKeyAndClickEventListener,
     cleanUpFields,
+    addEventListenerOpts,
 };
