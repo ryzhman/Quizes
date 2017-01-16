@@ -3,15 +3,19 @@
  */
 "use strict";
 
-const type = {
+const types = {
     "opt": "opt",
     "open": "open",
     "multiple": "multiple"
 };
 
+function getType(type){
+    return types[type];
+}
+
 module.exports = {
-    getQuestions: getQuestions,
-    type,
+    getQuestions,
+    getType,
 };
 
 function getQuestions() {
@@ -21,31 +25,22 @@ function getQuestions() {
             text: "What city is a capital of Ukraine?",
             options: ["Kyiv", "Brussel", "Tokio", "Lviv"],
             answer: ["Kyiv"],
-            type: type['opt']
+            type: types['opt']
         },
         {
             id: 1,
             text: "Type basic parent object in JS?",
             options: [],
             answer: ["Object"],
-            type: type['open']
+            type: types['open']
         },
         {
             id: 2,
             text: "How to create new String in JS?",
             options: ['\'str\'', '\"str\"', 'new String()', 'String()', 'stringify()'],
             answer: ['\'\'', '\"\"', 'new String()'],
-            type: type['multiple']
+            type: types['multiple']
         }
     ];
 }
 
-
-/*
- module.exports = {
- getUsers: getUsers
- };
-
-
- function getUsers() {
- return [*/

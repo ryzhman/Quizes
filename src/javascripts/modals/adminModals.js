@@ -99,11 +99,16 @@ let renderNumOfOptions = () => {
 };
 
 let renderNumOfOptionsMultiple = () => {
-    let numOfOptions = $('numOfOptionsMultiple').val();
+    let numOfOptions = $('#numOfOptionsMultiple').val();
     $('#options').append('<br><label>Enter options for answers</label>');
+    let htmlToInsert = "<br><table>";
     for (let i = 0; i < numOfOptions; i++) {
-        $('#options').append('<br><input id="opt' + i + '" required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs">');
+        htmlToInsert+=('<br>' +
+            '<tr><input type="checkbox" id="multipleAns' + i +'" class="inputs" height="48"></tr><tr><input type="text" id="opt' + i + '" ' +
+            'required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs"></tr>');
     }
+    htmlToInsert+='<table>';
+    $('#options').append(htmlToInsert);
 };
 
 let addOpenUserEventListener = () => {
@@ -112,6 +117,10 @@ let addOpenUserEventListener = () => {
 
 let addOpenQuizEventListener = () => {
     $('#modalQuiz_open')[0].addEventListener("click", openModalQuiz, false);
+};
+
+let addAnswersEventListener = () => {
+    $('#answer').focus(populateWithAnswers());
 };
 
 let addCloseEventListener = () => {
@@ -126,6 +135,15 @@ let addKeyAndClickEventListener = () => {
         document.attachEvent("onclick", clickHandler);
         document.attachEvent("onkeydown", keyHandler);
     }
+};
+
+let populateWithAnswers = () => {
+    let checkedAnswers = $('input[id^="multipleAns"]:checked');
+    let htmlToInsert = '<ul>';
+    for(let i=0; i<checkedAnswers.length; i++){
+        htmlToInsert += ("<li>" + checkedAnswers[i] + "</li>");
+    }
+    $("#answer").html(htmlToInsert);
 };
 
 let keyHandler = function (event) {
@@ -178,27 +196,7 @@ let closeModal = function (e) {
 };
 
 let cleanUpFields = () => {
-    if ($('#name')) {
-        $('#name').val("");
-        $('#pswd1').val("");
-        $('#pswd2').val("");
-    }
-    if ($('#question')) {
-        console.log($('#question'));
-        $('#question').val('');
-        $('#answer').val('');
-        $('#options').val('');
-        let muiltipleAnsw = $('[id^="multipleAns[0-9]"]');
-        for (let i = 0; i < muiltipleAnsw.length; i++) {
-            muiltipleAnsw[i].val('');
-        }
-        let opts = $('[id^="opt[0-9]"]');
-        for (let i = 0; i < opts.length; i++) {
-            opts[i].val('');
-        }
-        $('#numOfOptions').val('');
-        $('#numOfOptionsMultiple').val('');
-    }
+    $("input").val("");
 };
 
 module.exports = {
