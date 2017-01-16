@@ -37,7 +37,7 @@ const createNewQuizModal = () => html`
             <form id="add_quiz" action="#">
                 <p><label>Question<strong>*</strong><br>
                     <input type="text" autofocus required id="question" minlength="6" value="" placeholder="Enter question text here..." class="inputs"></label></p>
-                <p><label>Type<br>
+                <p><label>Type<strong>*</strong><br>
                     <select id="types" form="selectType">
                       <option selected disabled>Choose here</option>
                       <option value="opt">Options</option>
@@ -45,7 +45,10 @@ const createNewQuizModal = () => html`
                       <option value="multiple">Multiple answers</option>
                     </select>
                 </label></p>
-                <p id="options"><label>Options</label>
+                <p id="options">
+                </p>
+                <p><label>Answer<strong>*</strong></label><br/> <!--//todo checkbox for correct answers-->
+                      <input type="text" autofocus required id="answer" value="" placeholder="Enter answer text here..." class="inputs"></label></p>
                 </p>
                 <p><input type="submit" value="Add quiz"></p>
             </form>
@@ -58,11 +61,11 @@ let addEventListenerOpts = () => {
 };
 
 let addEventListenersChooseOpt = () => {
-    if ($('numOfOptions')) {
-        $('#numOfOptions').change(renderNumOfOptions);
+    if ($('#numOfOptions')[0]) {
+        $('#numOfOptions')[0].addEventListener("change", renderNumOfOptions, false);
     }
-    if ($('numOfOptionsMultiple')) {
-        $('#numOfOptionsMultiple').change(renderNumOfOptionsMultiple);
+    if ($('#numOfOptionsMultiple')[0]) {
+        $('#numOfOptionsMultiple')[0].addEventListener("change", renderNumOfOptionsMultiple, false);
     }
 };
 
@@ -83,23 +86,23 @@ let renderOptionsForm = () => {
             <input id="numOfOptionsMultiple" type="text" required placeholder="Enter number of options here..." minvalue="1" height="48" value="" class="inputs">
         `;
     }
-    addEventListenersChooseOpt();
     $('#options').html(htmlToInsert());
+    addEventListenersChooseOpt();
 };
 
 let renderNumOfOptions = () => {
-    console.log($('numOfOptions').val());
-    let numOfOptions = $('numOfOptions').val();
-    for (let i = 1; i < numOfOptions; i++) {
-        $('#options').append('<input id="opt +' + i + '" required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs">');
+    let numOfOptions = $('#numOfOptions').val();
+    $('#options').append('<br><label>Enter options for answers</label>');
+    for (let i = 0; i < numOfOptions; i++) {
+        $('#options').append('<br><input id="opt' + i + '" required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs">');
     }
 };
 
 let renderNumOfOptionsMultiple = () => {
-    console.log($('numOfOptionsMultiple').val());
     let numOfOptions = $('numOfOptionsMultiple').val();
-    for (let i = 1; i < numOfOptions; i++) {
-        $('#options').append('<input id="opt +' + i + '" required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs">');
+    $('#options').append('<br><label>Enter options for answers</label>');
+    for (let i = 0; i < numOfOptions; i++) {
+        $('#options').append('<br><input id="opt' + i + '" required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs">');
     }
 };
 
@@ -126,14 +129,14 @@ let addKeyAndClickEventListener = () => {
 };
 
 let keyHandler = function (event) {
-    if (event.keyCode == 27) {
+    if (event.keyCode === 27) {
         closeModal(event);
     }
 };
 
 let clickHandler = function (e) {
     if (!e.target) e.target = e.srcElement;
-    if (e.target.tagName == "DIV") {
+    if (e.target.tagName === "DIV") {
         if (e.target.id !== "modalWindowUser" && e.target.id !== "modalWindowQuiz") {
             closeModal(e);
         }
@@ -175,9 +178,27 @@ let closeModal = function (e) {
 };
 
 let cleanUpFields = () => {
-    $('#name').val("");
-    $('#pswd1').val("");
-    $('#pswd2').val("");
+    if ($('#name')) {
+        $('#name').val("");
+        $('#pswd1').val("");
+        $('#pswd2').val("");
+    }
+    if ($('#question')) {
+        console.log($('#question'));
+        $('#question').val('');
+        $('#answer').val('');
+        $('#options').val('');
+        let muiltipleAnsw = $('[id^="multipleAns[0-9]"]');
+        for (let i = 0; i < muiltipleAnsw.length; i++) {
+            muiltipleAnsw[i].val('');
+        }
+        let opts = $('[id^="opt[0-9]"]');
+        for (let i = 0; i < opts.length; i++) {
+            opts[i].val('');
+        }
+        $('#numOfOptions').val('');
+        $('#numOfOptionsMultiple').val('');
+    }
 };
 
 module.exports = {

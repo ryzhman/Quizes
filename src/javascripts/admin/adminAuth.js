@@ -4,6 +4,7 @@
 import $ from "jquery";
 import modals from "../modals/adminModals";
 import adminTmpl from "../../templates/admin/adminTmpl";
+import questData from "../data/questions";
 
 let modalWrapperUser;
 let modalWrapperQuiz;
@@ -66,6 +67,44 @@ let addNewUser = (event) => {
     return false;
 };
 
+let addNewQuiz = (event) => {
+    event.preventDefault();
+    let text = document.getElementById("question").value;
+    let type = $("#types").val();
+
+    let opts = []; //array
+    let options = $('input[id^="opt"]');
+    if (type !== "open") {
+        for (let i = 0; i < options.length; i++) {
+            opts[i] = $('#'+options[i].id).val();
+        }
+    }
+    let answer = [];
+    if (type !== "multiple") {
+        answer[0] = $("#answer").val(); //array
+    } else {
+        let muiltipleAnsw = $('input[id^="multipleAns"]'); //todo how to represent multiple answers?
+        for (let i = 0; i < multipleAnsw.length; i++) {
+            answer[i] = muiltipleAnsw[i].val(); //array
+        }
+    }
+    let newQuiz = {
+        "text": text,
+        "options": opts,
+        "answer": answer,
+        "type": questData[type]
+    };
+    console.log(type); //todo fix type issue
+    console.log(questData[type]);
+    quizesList.push(newQuiz);
+
+    refreshPage();
+    modals.cleanUpFields();
+    window.open(location, '_self', '');
+    window.close();
+    return false;
+};
+
 function authAsAdmin(user, data) {
     let loginData = {
         name: user.name,
@@ -104,6 +143,7 @@ function authAsAdmin(user, data) {
     modals.addKeyAndClickEventListener();
 
     document.getElementById("add_user").addEventListener("submit", addNewUser, false);
+    document.getElementById("add_quiz").addEventListener("submit", addNewQuiz, false);
     document.addEventListener("DOMContentLoaded", modals.modal_init, false);
     $(document).ready(function () {
         $("#pswd1, #pswd2").keyup(checkPasswordMatch);
