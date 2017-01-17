@@ -8,7 +8,7 @@ import html from "html-template-tag";
 const createNewUserModal = () => html`
     <div id="modalWrapperUser">
         <div id="modalWindowUser">
-            <div id="modalWindowHeader"><a id="modal_close">close <b>X</b></a></div>
+            <div id="modalWindowHeader"><a class="modal_close">close <b>X</b></a></div>
             <p>Enter new user details:</p>
             <form id="add_user" action="#">
                 <p><label>Name<strong>*</strong><br>
@@ -32,7 +32,7 @@ const createNewUserModal = () => html`
 const createNewQuizModal = () => html`
     <div id="modalWrapperQuiz">
         <div id="modalWindowQuiz">
-            <div id="modalWindowHeader"><a id="modal_close">close <b>X</b></a></div>
+            <div id="modalWindowHeader"><a class="modal_close">close <b>X</b></a></div>
             <p>Enter new quiz details:</p>
             <form id="add_quiz" action="#">
                 <p><label>Question<strong>*</strong><br>
@@ -110,20 +110,19 @@ let renderNumOfOptionsMultiple = () => {
         'required placeholder="Enter option here..." minlength="3" height="48" class="inputs"></td></tr>');
     }
     htmlToInsert+='<table>';
-    console.log(htmlToInsert);
     $('#options').append(htmlToInsert);
 };
 
 let addOpenUserEventListener = () => {
-    $('#modalUser_open')[0].addEventListener("click", openModalUser, false);
+    $('#modalUser_open').click(openModalUser);
 };
 
 let addOpenQuizEventListener = () => {
-    $('#modalQuiz_open')[0].addEventListener("click", openModalQuiz, false);
+    $('#modalQuiz_open').click(openModalQuiz);
 };
 
 let addCloseEventListener = () => {
-    $('#modal_close')[0].addEventListener('click', closeModal, false);
+    $('.modal_close').click(closeModal);
 };
 
 let addKeyAndClickEventListener = () => {
@@ -143,7 +142,9 @@ let keyHandler = function (event) {
 };
 
 let clickHandler = function (e) {
-    if (!e.target) e.target = e.srcElement;
+    if (!e.target) {
+        e.target = e.srcElement;
+    }
     if (e.target.tagName === "DIV") {
         if (e.target.id !== "modalWindowUser" && e.target.id !== "modalWindowQuiz") {
             closeModal(e);
@@ -180,6 +181,7 @@ let openModalQuiz = function (e) {
 };
 
 let closeModal = function (e) {
+    e.stopPropagation();
     $('#modalWrapperUser')[0].className = "";
     $('#modalWrapperQuiz')[0].className = "";
     $('#options').html('');

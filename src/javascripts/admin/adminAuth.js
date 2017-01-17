@@ -94,9 +94,9 @@ let addNewQuiz = (event) => {
 
     refreshBodyDiv();
     modals.cleanUpFields();
+    modals.closeModal();
     window.open(location, '_self', '');
     window.close();
-    return false;
 };
 
 let refreshBodyDiv = () => {
