@@ -45,12 +45,8 @@ const createNewQuizModal = () => html`
                       <option value="multiple">Multiple answers</option>
                     </select>
                 </label></p>
-                <p id="options">
-                </p>
-                <p><label>Answer<strong>*</strong></label><br/> <!--//todo checkbox for correct answers-->
-                      <input type="text" autofocus required id="answer" value="" placeholder="Enter answer text here..." class="inputs"></label></p>
-                </p>
-                <p><input type="submit" value="Add quiz"></p>
+                <p id="options"></p>
+                <p><input id="addQuizBtn" type="submit" value="Add quiz"></p>
             </form>
         </div>
     </div>
@@ -79,7 +75,7 @@ let renderOptionsForm = () => {
     } else if (selectedOpt === "open") {
         htmlToInsert = () =>
             html`
-            <input id="open" type ="text" required placeholder="Enter answer here..." minLength="3" height="48" value="" class="inputs">
+            <input id="open" type="text" required placeholder="Enter answer here..." minLength="3" height="48" value="" class="inputs">
         `;
     } else {
         htmlToInsert = () => html`
@@ -92,10 +88,15 @@ let renderOptionsForm = () => {
 
 let renderNumOfOptions = () => {
     let numOfOptions = $('#numOfOptions').val();
-    $('#options').append('<br><label>Enter options for answers</label>');
+    $('#options').append('<br><label>Enter options</label>');
+    let htmlToInsert = '<br><table>';
     for (let i = 0; i < numOfOptions; i++) {
-        $('#options').append('<br><input id="opt' + i + '" required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs">');
+        htmlToInsert += '<tr>' +
+            '<td><input type="radio" id="radio' + i + '" name="r1" value="opt' + i + '" minlength="3" height="48" class="inputs"></td>' +
+            '<td><input type="text" id="opt' + i + '" required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs"></td></td>';
     }
+    htmlToInsert += '<table>';
+    $('#options').append(htmlToInsert);
 };
 
 let renderNumOfOptionsMultiple = () => {
@@ -103,11 +104,13 @@ let renderNumOfOptionsMultiple = () => {
     $('#options').append('<br><label>Enter options for answers</label>');
     let htmlToInsert = "<br><table>";
     for (let i = 0; i < numOfOptions; i++) {
-        htmlToInsert+=('<br>' +
-            '<tr><input type="checkbox" value="opt' + i +'" id="multipleAns' + i +'" class="inputs" height="48"></tr><tr><input type="text" id="opt' + i + '" ' +
-            'required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs"></tr>');
+        htmlToInsert+=('<br><tr>' +
+        '<td><input type="checkbox" value="opt' + i +'" id="multipleAns' + i +'" class="inputs" height="48"></td>' +
+        '<td><input type="text" id="opt' + i + '" ' +
+        'required placeholder="Enter option here..." minlength="3" height="48" class="inputs"></td></tr>');
     }
     htmlToInsert+='<table>';
+    console.log(htmlToInsert);
     $('#options').append(htmlToInsert);
 };
 
@@ -117,10 +120,6 @@ let addOpenUserEventListener = () => {
 
 let addOpenQuizEventListener = () => {
     $('#modalQuiz_open')[0].addEventListener("click", openModalQuiz, false);
-};
-
-let addAnswersEventListener = () => {
-    $('#answer').focus(populateWithAnswers());
 };
 
 let addCloseEventListener = () => {
@@ -135,15 +134,6 @@ let addKeyAndClickEventListener = () => {
         document.attachEvent("onclick", clickHandler);
         document.attachEvent("onkeydown", keyHandler);
     }
-};
-
-let populateWithAnswers = () => {
-    let checkedAnswers = $('input[id^="multipleAns"]:checked');
-    let htmlToInsert = '<ul>';
-    for(let i=0; i<checkedAnswers.length; i++){
-        htmlToInsert += ("<li>" + checkedAnswers[i] + "</li>");
-    }
-    $("#answer").html(htmlToInsert);
 };
 
 let keyHandler = function (event) {
@@ -197,7 +187,7 @@ let closeModal = function (e) {
 };
 
 let cleanUpFields = () => {
-    $("input").val("");
+    $("input:not('#addQuizBtn')").val("");
 };
 
 module.exports = {

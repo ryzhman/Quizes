@@ -72,15 +72,16 @@ let addNewQuiz = (event) => {
         }
     }
     let answer = [];
-    if (type !== "multiple") {
-        answer[0] = $("#answer").val(); //array
+    if (type === "open") {
+        answer[0] = $("#open").val(); //array
+    } else if(type === 'opt'){
+        let checkedRadio = $("input[id^=radio]:checked").val();
+        answer[0] = $('#' + checkedRadio).val();
     } else {
-        console.log("in multiple block");
-        let multipleAnsw = $("input[id^=multipleAns]:checked"); //todo how to represent multiple answers?
-        let answers = [];
+        let multipleAnsw = $("input[id^=multipleAns]:checked");
         for (let i = 0; i < multipleAnsw.length; i++) {
-            console.log($(multipleAnsw[i]).val());
-            answer[i] = $(multipleAnsw[i]).val(); //array
+            let checkBoxValue = $(multipleAnsw[i]).val();
+            answer[i] = $('#' + checkBoxValue).val();
         }
     }
     let newQuiz = {

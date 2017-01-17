@@ -82,7 +82,7 @@ const createAddQuizButton = () => html`
 module.exports = {
     usersListTmpl,
     createAddUserButton,
+    createAddQuizButton,
     quizesListTmpl,
-    adminWelcomeInfo,
-    createAddQuizButton
+    adminWelcomeInfo
 };
