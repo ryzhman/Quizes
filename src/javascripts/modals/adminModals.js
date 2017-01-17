@@ -104,7 +104,7 @@ let renderNumOfOptionsMultiple = () => {
     let htmlToInsert = "<br><table>";
     for (let i = 0; i < numOfOptions; i++) {
         htmlToInsert+=('<br>' +
-            '<tr><input type="checkbox" id="multipleAns' + i +'" class="inputs" height="48"></tr><tr><input type="text" id="opt' + i + '" ' +
+            '<tr><input type="checkbox" value="opt' + i +'" id="multipleAns' + i +'" class="inputs" height="48"></tr><tr><input type="text" id="opt' + i + '" ' +
             'required placeholder="Enter option here..." minlength="3" height="48" value="" class="inputs"></tr>');
     }
     htmlToInsert+='<table>';
@@ -192,6 +192,7 @@ let openModalQuiz = function (e) {
 let closeModal = function (e) {
     $('#modalWrapperUser')[0].className = "";
     $('#modalWrapperQuiz')[0].className = "";
+    $('#options').html('');
     e.preventDefault ? e.preventDefault() : e.returnValue = false;
 };
 
