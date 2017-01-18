@@ -3,23 +3,32 @@
  */
 "use strict";
 
+let storage = localStorage;
 const types = {
     "opt": "opt",
     "open": "open",
     "multiple": "multiple"
 };
 
-function getType(type){
+let getType = (type) => {
     return types[type];
-}
+};
 
-module.exports = {
-    getQuestions,
-    getType,
+let setQuestions = (array) => {
+    storage.setItem('questionList', array);
 };
 
 function getQuestions() {
-    return [
+    return storage.getItem('questionList');
+};
+
+let addQuestion = (question) => {
+    let list = getQuestions();
+    list.push(question);
+};
+
+let initData = () =>{
+    let questionsArray = [
         {
             id: 0,
             text: "What city is a capital of Ukraine?",
@@ -42,5 +51,12 @@ function getQuestions() {
             type: types['multiple']
         }
     ];
-}
+    setQuestions(questionsArray);
+};
 
+module.exports = {
+    getType,
+    getQuestions,
+    initData,
+    addQuestion,
+}
