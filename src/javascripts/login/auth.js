@@ -49,11 +49,11 @@ function validateFail() {
 
 function validateSuccess(user) {
     if (user.group === 'admin') {
-        var dataForAdmin = renderer.config[user.group].data;
-        adminRole.authAsAdmin(user, dataForAdmin);
+        var dataForAdmin = renderer.getDataForGroup(user.group);
+        adminRole.authAsAdmin(user, dataForAdmin.data);
     } else if (user.group === 'client') {
-        var dataForUser = renderer.config[user.group].data;
-        userRole.authAsUser(user, dataForUser);
+        var dataForUser = renderer.getDataForGroup(user.group);
+        userRole.authAsUser(user, dataForUser.data);
     }
 }
 

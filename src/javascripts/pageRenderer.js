@@ -8,6 +8,10 @@ let main = document.getElementById('page');
 let usersList = users.getUsers();
 let quizesList = quizes.getQuestions();
 
+let getDataForGroup = (group) => {
+    return config[group];
+};
+
 let config = {
     admin: {
         data: [usersList, quizesList]
@@ -18,7 +22,13 @@ let config = {
 };
 
 
-module.exports = {config, main, usersList, quizesList};
+module.exports = {
+    config,
+    main,
+    usersList,
+    quizesList,
+    getDataForGroup
+};
 
 
 

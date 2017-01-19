@@ -5,6 +5,7 @@ import $ from "jquery";
 import modals from "../modals/adminModals";
 import adminTmpl from "../../templates/admin/adminTmpl";
 import questData from "../data/questions";
+import userData from "../data/users";
 
 let usersList;
 let quizesList;
@@ -26,17 +27,17 @@ let createRemoveUserButton = () => {
 //todo refactor for unique remove method
 let removeQuiz = (event) => {
     event.stopPropagation();
-    delete quizesList[event.toElement.getAttribute('id')];
+    questData.removeQuestion(event.toElement.getAttribute('id'));
     refreshBodyDiv();
 };
 
 let removeUser = (event) => {
     event.stopPropagation();
-    delete usersList[event.toElement.getAttribute('id')];
+    console.log(event);
+    userData.removeUser(event.toElement.getAttribute('id'));
     refreshBodyDiv();
 };
 
-//todo add ID
 let addNewUser = (event) => {
     event.preventDefault();
     let newUsr = document.getElementById("name").value;
@@ -49,16 +50,16 @@ let addNewUser = (event) => {
         "group": group,
     };
     newUser["access"] = (group === 'admin' ? 'unlimited' : 'limited');
-    usersList.push(newUser);
+    userData.addUser(newUser);
 
     refreshBodyDiv();
     modals.cleanUpFields();
+    console.log(window);
     window.open(location, '_self', '');
     window.close();
     return false;
 };
 
-//todo add ID
 let addNewQuiz = (event) => {
     event.preventDefault();
     let text = document.getElementById("question").value;
@@ -74,7 +75,7 @@ let addNewQuiz = (event) => {
     let answer = [];
     if (type === "open") {
         answer[0] = $("#open").val(); //array
-    } else if(type === 'opt'){
+    } else if (type === 'opt') {
         let checkedRadio = $("input[id^=radio]:checked").val();
         answer[0] = $('#' + checkedRadio).val();
     } else {
@@ -90,7 +91,7 @@ let addNewQuiz = (event) => {
         "answer": answer,
         "type": questData.getType(type)
     };
-    quizesList.push(newQuiz);
+    questData.addQuestion(newQuiz);
 
     refreshBodyDiv();
     modals.cleanUpFields();
@@ -101,6 +102,9 @@ let addNewQuiz = (event) => {
 
 let refreshBodyDiv = () => {
     let bodyDiv = document.getElementById("bodyDiv");
+    let usersList = userData.getUsers();
+    let quizesList = questData.getQuestions();
+
     $(bodyDiv).html(adminTmpl.usersListTmpl(usersList)
         + adminTmpl.createAddUserButton()
         + "\n\n"
@@ -120,9 +124,7 @@ let refreshBodyDiv = () => {
     document.getElementById("add_user").addEventListener("submit", addNewUser, false);
     document.getElementById("add_quiz").addEventListener("submit", addNewQuiz, false);
     document.addEventListener("DOMContentLoaded", modals.modal_init, false);
-    $(document).ready(function () {
-        $("#pswd1, #pswd2").keyup(checkPasswordMatch);
-    });
+    $('#pswd2').mouseleave(checkPasswordMatch);
 
     window.location.href = "#adminPage.html";
 };
@@ -146,7 +148,7 @@ function authAsAdmin(user, data) {
     quizesList = data[1];
 
     refreshBodyDiv();
-};
+}
 
 let checkPasswordMatch = () => {
     let password = $("#pswd1").val();

@@ -16,7 +16,7 @@ const createNewUserModal = () => html`
                 <p><label>Password<strong>*</strong><br>
                     <input id="pswd1" type="password" required placeholder="Enter password here..." minlength="3" height="48" value="" class="inputs"></label></p>
                 <p><label>Repeat password<strong>*</strong><br>
-                    <input id="pswd2" type="password" required placeholder="Enter password once more..." minlength="3" height="48" value="" class="inputs"></label>
+                    <input id="pswd2" type="password" required placeholder="Enter password once again..." minlength="3" height="48" value="" class="inputs"></label>
                     <div id="pswdDoesntMatch"></div></p>
                 <p><label>Group<br>
                     <select id="groups" form="selectGroup">
@@ -185,6 +185,7 @@ let closeModal = function (e) {
     $('#modalWrapperUser')[0].className = "";
     $('#modalWrapperQuiz')[0].className = "";
     $('#options').html('');
+    $("#pswdDoesntMatch").html('');
     e.preventDefault ? e.preventDefault() : e.returnValue = false;
 };
 
@@ -201,4 +202,5 @@ module.exports = {
     addKeyAndClickEventListener,
     cleanUpFields,
     addEventListenerOpts,
+    closeModal
 };

@@ -3,6 +3,7 @@
  */
 "use strict";
 import buildLoginForm from './login/loginForm.js';
+import dataProvider from './data/dataProvider';
 
-console.log(buildLoginForm);
 buildLoginForm.createLoginForm();
+dataProvider.loadAllData();

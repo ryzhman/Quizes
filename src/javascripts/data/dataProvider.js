@@ -8,11 +8,12 @@ import usersData from "./users";
 let loadAllData = () => {
     questionsData.initData();
     usersData.initData();
+    console.log("Data is loaded");
 };
 
 module.exports = {
     loadAllData,
-}
+};
 
 
 

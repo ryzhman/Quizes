@@ -2,8 +2,8 @@
  * Created by Олександр on 09.01.2017.
  */
 "use strict";
+import $ from "jquery";
 
-let storage = localStorage;
 const types = {
     "opt": "opt",
     "open": "open",
@@ -15,40 +15,67 @@ let getType = (type) => {
 };
 
 let setQuestions = (array) => {
-    storage.setItem('questionList', array);
+    let parsedList = JSON.stringify(array);
+    localStorage.setItem('questionList', parsedList);
 };
 
 function getQuestions() {
-    return storage.getItem('questionList');
+    let questions = localStorage.getItem('questionList');
+    return JSON.parse(questions);
+}
+
+let getMaxId = (list) => {
+    let result = list.map((a) => {
+        return a.id;
+    });
+    return Math.max.apply(null, result);
+};
+
+let removeQuestion = (quizId) => {
+    let questions = getQuestions();
+    let finalQuest = $.grep(questions, (e) => {
+        return e.id !== parseInt(quizId);
+    });
+    console.log(finalQuest);
+    if(finalQuest.length === (questions.length-1)){
+        setQuestions(finalQuest);
+        return 1;
+    } else {
+        return 0;
+    }
 };
 
 let addQuestion = (question) => {
     let list = getQuestions();
+    let maxId = getMaxId(list);
+    question.id = ++maxId;
     list.push(question);
+    console.log(list);
+    setQuestions(list);
 };
 
-let initData = () =>{
+let initData = () => {
     let questionsArray = [
         {
-            id: 0,
-            text: "What city is a capital of Ukraine?",
-            options: ["Kyiv", "Brussel", "Tokio", "Lviv"],
-            answer: ["Kyiv"],
-            type: types['opt']
+            "id": 0,
+            "text": "What city is a capital of Ukraine?",
+            "options": ["Kyiv", "Brussel", "Tokio", "Lviv"],
+            "answer": ["Kyiv"],
+            "type": types['opt']
         },
         {
-            id: 1,
-            text: "Type basic parent object in JS?",
-            options: [],
-            answer: ["Object"],
-            type: types['open']
+            "id": 1,
+            "text": "Type basic parent object in JS?",
+            "options": [],
+            "answer": ["Object"],
+            "type": types['open']
         },
         {
-            id: 2,
-            text: "How to create new String in JS?",
-            options: ['\'str\'', '\"str\"', 'new String()', 'String()', 'stringify()'],
-            answer: ['\'\'', '\"\"', 'new String()'],
-            type: types['multiple']
+            "id": 2,
+            "text": "How to create new String in JS?",
+            "options": ['\'str\'', '\"str\"', 'new String()', 'String()', 'stringify()'],
+            "answer": ['\'\'', '\"\"', 'new String()'],
+            "type": types['multiple']
         }
     ];
     setQuestions(questionsArray);
@@ -59,4 +86,5 @@ module.exports = {
     getQuestions,
     initData,
     addQuestion,
-}
+    removeQuestion
+};
