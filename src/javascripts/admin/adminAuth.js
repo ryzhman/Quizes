@@ -126,7 +126,10 @@ let refreshBodyDiv = () => {
     document.addEventListener("DOMContentLoaded", modals.modal_init, false);
     $('#pswd2').mouseleave(checkPasswordMatch);
 
-    window.location.href = "#adminPage.html";
+    window.location.hash = "#adminPage.html";
+    window.addEventListener('popstate', function (event) {
+        alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+    });
 };
 
 function authAsAdmin(user, data) {
@@ -158,6 +161,10 @@ let checkPasswordMatch = () => {
         $("#pswdDoesntMatch").html("Passwords do not match!");
     }
 };
+
+// require('hashchange').update(function (hashFragment) {
+//     console.log('hash is now ' + hashFragment)
+// });
 
 module.exports = {
     authAsAdmin: authAsAdmin,

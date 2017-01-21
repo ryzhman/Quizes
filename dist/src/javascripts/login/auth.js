@@ -63,11 +63,11 @@ function validateFail() {
 
 function validateSuccess(user) {
     if (user.group === 'admin') {
-        var dataForAdmin = _pageRenderer2.default.config[user.group].data;
-        _adminAuth2.default.authAsAdmin(user, dataForAdmin);
+        var dataForAdmin = _pageRenderer2.default.getDataForGroup(user.group);
+        _adminAuth2.default.authAsAdmin(user, dataForAdmin.data);
     } else if (user.group === 'client') {
-        var dataForUser = _pageRenderer2.default.config[user.group].data;
-        _userAuth2.default.authAsUser(user, dataForUser);
+        var dataForUser = _pageRenderer2.default.getDataForGroup(user.group);
+        _userAuth2.default.authAsUser(user, dataForUser.data);
     }
 }
 

@@ -66,7 +66,7 @@ let initData = () => {
         {
             "id": 1,
             "text": "Type basic parent object in JS?",
-            "options": [],
+            "options": [""],
             "answer": ["Object"],
             "type": types['open']
         },
