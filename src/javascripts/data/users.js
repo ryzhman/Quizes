@@ -71,6 +71,15 @@ let initData = () => {
     }
     ];
     setUsers(usersList);
+    setInited();
+};
+
+let isInited = () => {
+  return localStorage.getItem('isUsersDBInited');
+};
+
+let setInited = () => {
+    localStorage.setItem('isUsersDBInited', true);
 };
 
 module.exports = {
@@ -79,5 +88,6 @@ module.exports = {
     setUsers,
     initData,
     removeUser,
-    setLastLogin
+    setLastLogin,
+    isInited,
 };

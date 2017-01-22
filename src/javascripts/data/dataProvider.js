@@ -6,8 +6,12 @@ import questionsData from "./questions";
 import usersData from "./users";
 
 let loadAllData = () => {
-    questionsData.initData();
-    usersData.initData();
+    if (!questionsData.isInited()) {
+        questionsData.initData();
+    }
+    if (!usersData.isInited()) {
+        usersData.initData();
+    }
     console.log("Data is loaded");
 };
 

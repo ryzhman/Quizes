@@ -71,12 +71,21 @@ let initData = () => {
         {
             "id": 2,
             "text": "How to create new String in JS?",
-            "options": ["\'str\'", "new String(string)", 'String("str")', 'stringify("str")'],
-            "answer": ["\'str\'", 'new String(string)'],
+            "options": ["'str'", "new String(string)", 'String("str")', 'stringify("str")'],
+            "answer": ["'str'", 'new String(string)'],
             "type": types['multiple']
         }
     ];
     setQuestions(questionsArray);
+    setInited();
+};
+
+let isInited = () => {
+    return localStorage.getItem('isQuizesDBInited');
+};
+
+let setInited = () => {
+    localStorage.setItem('isQuizesDBInited', true);
 };
 
 module.exports = {
@@ -84,5 +93,6 @@ module.exports = {
     getQuestions,
     initData,
     addQuestion,
-    removeQuestion
+    removeQuestion,
+    isInited
 };
