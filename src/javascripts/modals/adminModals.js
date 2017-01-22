@@ -12,11 +12,11 @@ const createNewUserModal = () => html`
             <p>Enter new user details:</p>
             <form id="add_user" action="#">
                 <p><label>Name<strong>*</strong><br>
-                    <input type="text" autofocus required id="name" minlength="6" value="" placeholder="Enter username here..." class="inputs"></label></p>
+                    <input type="text" autofocus required id="name" minlength="6" value="" autocomplete='off' placeholder="Enter username here..." class="inputs"></label></p>
                 <p><label>Password<strong>*</strong><br>
-                    <input id="pswd1" type="password" required placeholder="Enter password here..." minlength="3" height="48" value="" class="inputs"></label></p>
+                    <input id="pswd1" type="password" required placeholder="Enter password here..." autocomplete='off' minlength="3" height="48" value="" class="inputs"></label></p>
                 <p><label>Repeat password<strong>*</strong><br>
-                    <input id="pswd2" type="password" required placeholder="Enter password once again..." minlength="3" height="48" value="" class="inputs"></label>
+                    <input id="pswd2" type="password" required placeholder="Enter password once again..." autocomplete='off' minlength="3" height="48" value="" class="inputs"></label>
                     <div id="pswdDoesntMatch"></div></p>
                 <p><label>Group<br>
                     <select id="groups" form="selectGroup">
@@ -36,7 +36,7 @@ const createNewQuizModal = () => html`
             <p>Enter new quiz details:</p>
             <form id="add_quiz" action="#">
                 <p><label>Question<strong>*</strong><br>
-                    <input type="text" autofocus required id="question" minlength="6" value="" placeholder="Enter question text here..." class="inputs"></label></p>
+                    <input type="text" autofocus required id="question" minlength="6" value="" autocomplete='off' placeholder="Enter question text here..." class="inputs"></label></p>
                 <p><label>Type<strong>*</strong><br>
                     <select id="types" form="selectType">
                       <option selected disabled>Choose here</option>
@@ -70,16 +70,16 @@ let renderOptionsForm = () => {
     let htmlToInsert;
     if (selectedOpt === "opt") {
         htmlToInsert = () => html`
-            <input id="numOfOptions" type="text" required placeholder="Enter number of options here..." minvalue="1" height="48" value="" class="inputs">
+            <input id="numOfOptions" type="text" required placeholder="Enter number of options here..." autocomplete='off' minvalue="1" height="48" value="" class="inputs">
         `;
     } else if (selectedOpt === "open") {
         htmlToInsert = () =>
             html`
-            <input id="open" type="text" required placeholder="Enter answer here..." minLength="3" height="48" value="" class="inputs">
+            <input id="open" type="text" required placeholder="Enter answer here..." autocomplete='off' minLength="3" height="48" value="" class="inputs">
         `;
     } else {
         htmlToInsert = () => html`
-            <input id="numOfOptionsMultiple" type="text" required placeholder="Enter number of options here..." minvalue="1" height="48" value="" class="inputs">
+            <input id="numOfOptionsMultiple" type="text" required placeholder="Enter number of options here..." autocomplete='off' minvalue="1" height="48" value="" class="inputs">
         `;
     }
     $('#options').html(htmlToInsert());
@@ -186,6 +186,7 @@ let closeModal = function (e) {
     $('#modalWrapperQuiz')[0].className = "";
     $('#options').html('');
     $("#pswdDoesntMatch").html('');
+    $('select').val('');
     e.preventDefault ? e.preventDefault() : e.returnValue = false;
 };
 
