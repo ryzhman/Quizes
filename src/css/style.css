@@ -26,7 +26,7 @@
     background-color: lightgoldenrodyellow;
 }
 
-.close:hover, .close:focus {
+.modal_close:hover, .modal_close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
@@ -47,6 +47,33 @@ td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+}
+
+.option, .eachOption {
+    position: relative;
+    text-align: left;
+    list-style-type: none;
+}
+
+.eachOption {
+    text-indent: 40px;
+}
+
+.textOption {
+    text-align: left;
+    position: relative;
+    margin-left: 40px;
+}
+
+.option{
+    text-indent: 50px;
+}
+
+.questions{
+    position: relative;
+    text-align: left;
+    text-indent: 60px;
+    size: 20px;
 }
 
 caption{

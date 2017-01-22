@@ -13,32 +13,17 @@ const userWelcomeInfo = loginDt => {
 `;
 };
 
-/*const createTestsList = (testsList) => {
-    return `
-    <h2>General knowledge test</h2>
-    ${testsList.map(quiz => `
-       <h4>${quiz.text}</h4>
-       <p>
-           ${quiz.options.map(option => `
-                ${quiz.type === "opt" ?  renderOptionForm(quiz, option) :
-                (quiz.type === "multiple" ? renderMultipleForm(quiz, option) :
-                renderTextForm(quiz))
-                }
-            `).join("")
-            }
-       </p>
-    `).join("")}
-`;
-};*/
-
 const createTestsList = (testsList) => {
     return `
     <h2>General knowledge test</h2>
     ${testsList.map(quiz => `
-       <h4>${quiz.text}</h4>
-       <p>
-           ${renderOptions(quiz)}
-       </p>
+       <h4 class="questions">${quiz.text}</h4>
+       <form id="quiz" action="#">
+           <p>
+               ${renderOptions(quiz)}
+           </p>
+           <p><input type="submit" value="Finish test"></p>
+       </form>
     `).join("")}
 `;
 };
@@ -47,7 +32,7 @@ const renderOptions = (quiz) => {
     if(quiz.type === 'opt'){
         return `
             ${quiz.options.map(option => `
-                <ul>
+                <ul class="options">
                 ${renderOptionForm(quiz, option)}
                 </ul>
                 `).join("")}
@@ -55,7 +40,7 @@ const renderOptions = (quiz) => {
     } else if (quiz.type === 'multiple') {
         return `
              ${quiz.options.map(option => `
-                <ul>
+                <ul class="options">
                 ${renderMultipleForm(quiz, option)}
                 </ul>
                 `).join("")}
@@ -69,24 +54,24 @@ const renderOptions = (quiz) => {
 
 const renderOptionForm = (quiz, option) => {
     return `
-                <br><li>
-                <input type="radio" id="radio' + ${quiz.id} + '" name="r1" value="opt' + ${quiz.id} + '" height="48" class="inputs">
+                <li class="eachOption">
+                <input type="radio" id="radio + ${quiz.id} + " name="r + ${quiz.id}" value="opt' + ${quiz.id} + '" height="48">
                 <label for="r1"> ${option}</label>
                 </li>
         `;
 };
 
 const renderMultipleForm = (quiz, option) => {
-    return `<br><li>
-                <input type="checkbox" id="checkbox' + ${quiz.id} + '" name="check1" value="opt' + ${quiz.id} + '" height="48" class="inputs">
+    return `<li class="eachOption">
+                <input type="checkbox" id="checkbox + ${quiz.id} + " name="check + ${quiz.id}" value="opt' + ${quiz.id} + '" height="48" >
                 <label for="check1">${option}</label>
                 </li>
         `;
 };
 
 const renderTextForm = (quiz) => {
-    return `<br><li>
-        <input type="text" id="text' + ${quiz.id} + '" required placeholder="Enter answer here..." value="" minlength="3" height="48" class="inputs">
+    return `<li class="eachOption">
+        <input class="textOption" type="text" name="text + ${quiz.id} + " id="text' + ${quiz.id} + '" required placeholder="Enter answer here..." value="" minlength="3" height="48" >
         </li>
     `;
 };
