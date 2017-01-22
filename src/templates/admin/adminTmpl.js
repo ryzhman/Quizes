@@ -7,7 +7,7 @@ import html from "html-template-tag";
 //creates a template for admin greeting
 const adminWelcomeInfo = loginDt => html`
     <h2>
-    Hello ${loginDt.name}! Last time you visited this page was ${loginDt.lastVisit}.
+    Hello ${loginDt.name}! ${loginDt.lastVisit ? `Last time you visited this page ${loginDt.lastVisit}`: ``}
     </h2>
 `;
 

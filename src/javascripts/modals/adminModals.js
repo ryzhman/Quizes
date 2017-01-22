@@ -21,7 +21,7 @@ const createNewUserModal = () => html`
                 <p><label>Group<br>
                     <select id="groups" form="selectGroup">
                       <option value="admin">Admins</option>
-                      <option value="user">Users</option>
+                      <option value="client">Clients</option>
                     </select>
                 <p><input type="submit" value="Add user"></p>
             </form>
@@ -102,14 +102,14 @@ let renderNumOfOptions = () => {
 let renderNumOfOptionsMultiple = () => {
     let numOfOptions = $('#numOfOptionsMultiple').val();
     $('#options').append('<br><label>Enter options for answers</label>');
-    let htmlToInsert = "<br><table>";
+    let htmlToInsert = "<table>";
     for (let i = 0; i < numOfOptions; i++) {
-        htmlToInsert+=('<br><tr>' +
+        htmlToInsert+=('<tr>' +
         '<td><input type="checkbox" value="opt' + i +'" id="multipleAns' + i +'" class="inputs" height="48"></td>' +
         '<td><input type="text" id="opt' + i + '" ' +
         'required placeholder="Enter option here..." minlength="3" height="48" class="inputs"></td></tr>');
     }
-    htmlToInsert+='<table>';
+    htmlToInsert+='</table>';
     $('#options').append(htmlToInsert);
 };
 
