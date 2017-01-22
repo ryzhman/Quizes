@@ -32,21 +32,11 @@
     cursor: pointer;
 }
 
-div, h2, h3 {
-    position: relative;
+div, h3 {
     text-align: center;
-}
+    position: relative;
+    color: #039;
 
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
 }
 
 .option, .eachOption {
@@ -65,27 +55,22 @@ td, th {
     margin-left: 40px;
 }
 
-.option{
+.option {
     text-indent: 50px;
 }
 
-.questions{
+.questions {
     position: relative;
     text-align: left;
     text-indent: 60px;
     size: 20px;
 }
 
-caption{
-    font-family: arial, sans-serif;
-    font: bold 150% black;
-}
-
-#modalWindowHeader{
+#modalWindowHeader {
     text-align: right;
 }
 
-#modalWrapperUser.overlay:before, #modalWrapperQuiz.overlay:before{
+#modalWrapperUser.overlay:before, #modalWrapperQuiz.overlay:before {
     content: " ";
     width: 100%;
     height: 100%;
@@ -94,32 +79,72 @@ caption{
     top: 0;
     left: 0;
     background: #000;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0, 0, 0, 0.7);
 }
 
-#modalWindowUser, #modalWindowQuiz{
+#modalWindowUser, #modalWindowQuiz {
     display: none;
     z-index: 200;
     position: fixed;
     left: 50%;
     top: 50%;
     width: 600px;
+    height: 600px;
     overflow: auto;
     padding: 10px 20px;
     background: #fff;
     border: 5px solid #999;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.inputs{
-    width:60%
+.inputs {
+    width: 60%
 }
 
-#modalWrapperUser.overlay #modalWindowUser{
+#modalWrapperUser.overlay #modalWindowUser {
     display: block;
 }
 
-#modalWrapperQuiz.overlay #modalWindowQuiz{
+#modalWrapperQuiz.overlay #modalWindowQuiz {
     display: block;
+}
+
+#hor-zebra {
+    font-family: arial, sans-serif, bold;
+    font-size: 16px;
+    margin: 45px;
+    width: 75%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+caption, h2{
+    font-family: arial, sans-serif, bold;
+    font-size: 24px;
+    text-align: center;
+    position: relative;
+    color: #039;
+}
+
+#hor-zebra th {
+    font-size: 18px;
+    font-weight: bolder;
+    padding: 10px 8px;
+    color: #039;
+    text-align: center;
+    border-bottom: solid;
+}
+
+#hor-zebra tr {
+    padding: 8px;
+    color: #669;
+    text-align: center;
+    border-spacing: 2px;
+    border-color: grey;
+    padding: 20%;
+}
+
+#hor-zebra .odd {
+    background: #e8edff;
 }
