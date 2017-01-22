@@ -40,6 +40,19 @@ let removeUser = (userId) => {
     }
 };
 
+let setLastLogin = user => {
+    let users = getUsers();
+    let userToChange = $.grep(users, item => {
+        return item.id !== user.id;
+    });
+    userToChange[0].lastVisit = new Date().toString();
+    let listWithoutUserToChange = $.grep(users, item => {
+        return item.id === userToChange[0].id;
+    });
+    listWithoutUserToChange.push(userToChange[0]);
+    setUsers(listWithoutUserToChange);
+};
+
 let initData = () => {
     let usersList = [{
         "id": 0,
@@ -66,4 +79,5 @@ module.exports = {
     setUsers,
     initData,
     removeUser,
+    setLastLogin
 };

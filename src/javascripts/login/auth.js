@@ -3,6 +3,7 @@ import users from '../data/users.js';
 import adminRole from '../admin/adminAuth';
 import userRole from '../quiz/userAuth';
 import renderer from '../pageRenderer';
+import userData from '../data/users';
 
 var auth = {
     validateCredentials: function (event) {
@@ -50,9 +51,11 @@ function validateFail() {
 function validateSuccess(user) {
     if (user.group === 'admin') {
         var dataForAdmin = renderer.getDataForGroup(user.group);
+        userData.setLastLogin(user);
         adminRole.authAsAdmin(user, dataForAdmin.data);
     } else if (user.group === 'client') {
         var dataForUser = renderer.getDataForGroup(user.group);
+        userData.setLastLogin(user);
         userRole.authAsUser(user, dataForUser.data);
     }
 }
