@@ -41,15 +41,15 @@ let removeUser = (userId) => {
 };
 
 let setLastLogin = user => {
-    let users = getUsers();
-    let userToChange = $.grep(users, item => {
-        return item.id !== user.id;
+    let userToChange = $.grep(getUsers(), item => {
+        return item.id === user.id;
     });
     userToChange[0].lastVisit = new Date().toString();
-    let listWithoutUserToChange = $.grep(users, item => {
-        return item.id === userToChange[0].id;
+    let listWithoutUserToChange = $.grep(getUsers(), item => {
+        return item.id !== userToChange[0].id;
     });
     listWithoutUserToChange.push(userToChange[0]);
+    console.log(listWithoutUserToChange);
     setUsers(listWithoutUserToChange);
 };
 
