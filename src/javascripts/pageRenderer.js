@@ -17,7 +17,7 @@ let config = {
         data: [usersList, quizesList]
     },
     client: {
-        data: [quizesList]
+        data: quizesList
     }
 };
 

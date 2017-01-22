@@ -36,7 +36,6 @@ let removeQuestion = (quizId) => {
     let finalQuest = $.grep(questions, (e) => {
         return e.id !== parseInt(quizId);
     });
-    console.log(finalQuest);
     if(finalQuest.length === (questions.length-1)){
         setQuestions(finalQuest);
         return 1;
@@ -50,7 +49,6 @@ let addQuestion = (question) => {
     let maxId = getMaxId(list);
     question.id = ++maxId;
     list.push(question);
-    console.log(list);
     setQuestions(list);
 };
 
@@ -66,15 +64,15 @@ let initData = () => {
         {
             "id": 1,
             "text": "Type basic parent object in JS?",
-            "options": [""],
+            "options": [],
             "answer": ["Object"],
             "type": types['open']
         },
         {
             "id": 2,
             "text": "How to create new String in JS?",
-            "options": ['\'str\'', '\"str\"', 'new String()', 'String()', 'stringify()'],
-            "answer": ['\'\'', '\"\"', 'new String()'],
+            "options": ["\'str\'", "new String(string)", 'String("str")', 'stringify("str")'],
+            "answer": ["\'str\'", 'new String(string)'],
             "type": types['multiple']
         }
     ];
