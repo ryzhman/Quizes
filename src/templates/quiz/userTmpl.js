@@ -8,7 +8,7 @@ import html from "html-template-tag";
 const userWelcomeInfo = loginDt => {
     return html`
     <h2>
-    Hello ${loginDt.name}! Last time you visited this page was ${loginDt.lastVisit}.
+    Hello ${loginDt.name}! ${loginDt.lastVisit ? `Last time you visited this page was ${loginDt.lastVisit}` : ``}
     </h2>
 `;
 };
@@ -16,33 +16,32 @@ const userWelcomeInfo = loginDt => {
 const createTestsList = (testsList) => {
     return `
     <h2>General knowledge test</h2>
-    ${testsList.map(quiz => `
-       <h4 class="questions">${quiz.text}</h4>
-       <form id="quiz" action="#">
-           <p>
-               ${renderOptions(quiz)}
-           </p>
-           <p><input type="submit" value="Finish test"></p>
-       </form>
-    `).join("")}
+    <form id="quiz" action="#">
+    <ul class="options">
+        ${testsList.map(quiz => `
+           <h4 class="questions">${quiz.text}</h4>
+               <p>
+                   ${renderOptions(quiz)}
+               </p>
+              
+        `).join("")}
+    </ul>
+    <p><input type="submit" value="Finish test"></p>
+    </form>
 `;
 };
 
 const renderOptions = (quiz) => {
-    if(quiz.type === 'opt'){
+    if (quiz.type === 'opt') {
         return `
             ${quiz.options.map(option => `
-                <ul class="options">
                 ${renderOptionForm(quiz, option)}
-                </ul>
                 `).join("")}
             `;
     } else if (quiz.type === 'multiple') {
         return `
              ${quiz.options.map(option => `
-                <ul class="options">
                 ${renderMultipleForm(quiz, option)}
-                </ul>
                 `).join("")}
         `;
     } else {
@@ -55,7 +54,7 @@ const renderOptions = (quiz) => {
 const renderOptionForm = (quiz, option) => {
     return `
                 <li class="eachOption">
-                <input type="radio" id="radio + ${quiz.id} + " name="r + ${quiz.id}" value="opt' + ${quiz.id} + '" height="48">
+                <input type="radio" id="radio${quiz.id}" name="r${quiz.id}" value='${option}' height="48">
                 <label for="r1"> ${option}</label>
                 </li>
         `;
@@ -63,7 +62,7 @@ const renderOptionForm = (quiz, option) => {
 
 const renderMultipleForm = (quiz, option) => {
     return `<li class="eachOption">
-                <input type="checkbox" id="checkbox + ${quiz.id} + " name="check + ${quiz.id}" value="opt' + ${quiz.id} + '" height="48" >
+                <input type="checkbox" id="checkbox${quiz.id}" name="check${quiz.id}" value='${option}' height="48" >
                 <label for="check1">${option}</label>
                 </li>
         `;
@@ -71,52 +70,32 @@ const renderMultipleForm = (quiz, option) => {
 
 const renderTextForm = (quiz) => {
     return `<li class="eachOption">
-        <input class="textOption" type="text" name="text + ${quiz.id} + " id="text' + ${quiz.id} + '" required placeholder="Enter answer here..." value="" minlength="3" height="48" >
+        <input class="textOption" type="text" name="text${quiz.id}" id="text${quiz.id}" required placeholder="Enter answer here..." value="" minlength="3" height="48" >
         </li>
     `;
 };
-/*
- const createQuizBlock = (quiz) => {
- return html`
- `;
- };
- // createQuizBlock(quiz)}
 
+const renderResult = (result) => {
+    return `
+        ${result.correctAnsw/result.total > 0.5 ? `
+            <h4>You have passed the test. Rate of correct answers is ${(result.correctAnsw/result.total).toPrecision(2)}</h4> 
+            `: `
+            <h4>You have not passed the test. Rate of correct answers is ${(result.correctAnsw/result.total).toPrecision(2)}</h4>
+            <p>${tryAgainButton()}</p>
+        `}
+    `;
+};
 
- const createOptionsBlock = (type, options) => {
- let htmlToInsert = "<ul>";
- if (type === "opt") {
- htmlToInsert += html`${options.map(option => html`
- <li>
- <input type="radio" id="radio' + i + '" name="r1" value="opt' + i + '" minlength="3" height="48" class="inputs">
- <label>${option}</label>
- </li>
- `)
- };
- `;
- } else if (type === 'multiple') {
- htmlToInsert += html`${options.map(option => html`
- <li>
- <input type="checkbox" id="checkbox' + i + '" name="r1" value="opt' + i + '" minlength="3" height="48" class="inputs">
- <label>${option}</label>
- </li>
- `)
- };
- `;
- } else {
- htmlToInsert += html`
- <li>
- <input type="text" id="text' + i + '" required placeholder="Enter answer here..." value="opt' + i + '" minlength="3" height="48" class="inputs">
- </li>
- `;
- }
- htmlToInsert += '</ul>';
- console.log(htmlToInsert);
- return htmlToInsert;
- };*/
+const tryAgainButton = () => {
+    return `
+        <button id='tryAgain'>Try again</button>
+    `;
+};
 
 module.exports = {
     userWelcomeInfo,
-    createTestsList
+    createTestsList,
+    renderResult,
+    tryAgainButton
 };
 
