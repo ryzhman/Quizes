@@ -4,9 +4,13 @@
 'use strict';
 import userTemplate from "../../templates/quiz/userTmpl";
 import $ from 'jquery';
+import usersData from '../data/users';
+import questionData from '../data/questions';
+import hashChangeHandler from '../../templates/hashHandler';
 
 let allQuestions = [];
 let userData = [];
+let previousLocation;
 
 let getAnswerForQuestionById = (quiz) => {
     return quiz.answer;
@@ -51,9 +55,6 @@ let evalTest = (event) => {
 
     for (let i = 0; i < optsQuestions.length; i++) {
         let userAnswer = $("input[name='r" + optsQuestions[i].id + "']:checked").val();
-        if (!userAnswer) {
-            alert("You have not finished test yet");
-        }
         let currentQuestionAnsw = getAnswerForQuestionById(optsQuestions[i]);
         if (userAnswer === currentQuestionAnsw[0]) {
             numberOfCorrectAnw++;
@@ -65,10 +66,6 @@ let evalTest = (event) => {
         $("input[name='check" + multipleQuestions[i].id + "']:checked").each((e, selected) => {
             userAnswer[e] = $(selected).val();
         });
-        console.log(userAnswer);
-        if (userAnswer.length === 0) {
-            alert("You have not finished test yet");
-        }
         let currentQuestionAnsw = getAnswerForQuestionById(multipleQuestions[i]);
         console.log(currentQuestionAnsw);
         var areSame = (userAnswer.length === currentQuestionAnsw.length) && userAnswer.every((element, index) => {
@@ -81,15 +78,11 @@ let evalTest = (event) => {
 
     for (let i = 0; i < textQuestions.length; i++) {
         let userAnswer = $("input[name='text" + textQuestions[i].id + "']").val();
-        if (!userAnswer) {
-            alert("You have not finished test yet");
-        }
         let currentQuestionAnsw = getAnswerForQuestionById(textQuestions[i]);
         if (userAnswer === currentQuestionAnsw[0]) {
             numberOfCorrectAnw++;
         }
     }
-    console.log(numberOfCorrectAnw);
     let result = {
         total: allQuestions.length,
         correctAnsw: numberOfCorrectAnw
@@ -106,11 +99,31 @@ function authAsUser(user, data) {
     $('#bodyDiv').html(userTemplate.createTestsList(allQuestions));
 
     $("#quiz").submit(evalTest);
-    window.location.href = "#quiz.html";
+    previousLocation = window.location.hash;
+    window.location.hash = "#quiz.html";
 }
 
+let displayQuiz = ()=>{
+    console.log(userData);
+    console.log(allQuestions);
+    if(userData && allQuestions) {
+        authAsUser(userData, allQuestions);
+    } else {
+        userData = usersData.getUsers();
+        allQuestions = questionData.getQuestions();
+        authAsUser(userData, allQuestions);
+    }
+};
+
+window.onhashchange = function () {
+    if (window.innerDocClick) {
+        window.innerDocClick = false;
+    } else {
+        hashChangeHandler.handleHashChange(window.location.hash);
+    }
+}
 
 module.exports = {
     authAsUser: authAsUser,
-
+    displayQuiz,
 };

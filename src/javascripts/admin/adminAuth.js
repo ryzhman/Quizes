@@ -2,6 +2,7 @@
  * Created by Олександр on 09.01.2017.
  */
 import $ from "jquery";
+import hashChangeHandler from '../../templates/hashHandler';
 import modals from "../modals/adminModals";
 import adminTmpl from "../../templates/admin/adminTmpl";
 import questData from "../data/questions";
@@ -9,6 +10,16 @@ import userData from "../data/users";
 
 let usersList;
 let quizesList;
+let loginData;
+let previousLocation;
+
+window.onhashchange = function () {
+    if (window.innerDocClick) {
+        window.innerDocClick = false;
+    } else {
+        hashChangeHandler.handleHashChange(window.location.hash, usersList, quizesList, loginData);
+    }
+}
 
 let createRemoveQuizButton = () => {
     let buttons = document.getElementsByClassName('removeQuiz');
@@ -126,10 +137,8 @@ let refreshBodyDiv = () => {
     document.addEventListener("DOMContentLoaded", modals.modal_init, false);
     $('#pswd2').mouseleave(checkPasswordMatch);
 
+    previousLocation = window.location.hash;
     window.location.hash = "#adminPage.html";
-    window.addEventListener('popstate', function (event) {
-        alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
-    });
 };
 
 function authAsAdmin(user, data) {
@@ -162,9 +171,6 @@ let checkPasswordMatch = () => {
     }
 };
 
-// require('hashchange').update(function (hashFragment) {
-//     console.log('hash is now ' + hashFragment)
-// });
 
 module.exports = {
     authAsAdmin: authAsAdmin,

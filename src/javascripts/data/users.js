@@ -53,6 +53,7 @@ let setLastLogin = user => {
 
 let setActiveUser = (user) => {
     localStorage.setItem("activeUser", JSON.stringify(user));
+    localStorage.setItem("activeUser", JSON.stringify(user));
 };
 
 let getActiveUser = () => {
