@@ -26,7 +26,7 @@ const createTestsList = (testsList) => {
               
         `).join("")}
     </ul>
-    <p><input type="submit" value="Finish test"></p>
+    <p><input id='submitTestResults' type="submit" value="Finish test"></p>
     </form>
 `;
 };
@@ -78,9 +78,12 @@ const renderTextForm = (quiz) => {
 const renderResult = (result) => {
     return `
         ${result.correctAnsw/result.total > 0.5 ? `
-            <h4>You have passed the test. Rate of correct answers is ${(result.correctAnsw/result.total).toPrecision(2)}</h4> 
+            <h4>You have passed the test: ${result.correctAnsw} correct of ${result.total} questions. 
+            <br>Rate of correct answers is ${(result.correctAnsw/result.total).toPrecision(2)}
+            </h4> 
             `: `
-            <h4>You have not passed the test. Rate of correct answers is ${(result.correctAnsw/result.total).toPrecision(2)}</h4>
+            <h4>You have not passed the test: only ${result.correctAnsw} correct of ${result.total} questions.
+            <br>Rate of correct answers is ${(result.correctAnsw/result.total).toPrecision(2)}</h4>
             <p>${tryAgainButton()}</p>
         `}
     `;

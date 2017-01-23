@@ -31,7 +31,6 @@ let removeUser = (userId) => {
     let listWithoutUser = $.grep(users, (e) => {
         return e.id !== parseInt(userId);
     });
-    console.log(listWithoutUser);
     if (listWithoutUser.length === (users.length-1)) {
         setUsers(listWithoutUser);
         return 1;
@@ -49,8 +48,19 @@ let setLastLogin = user => {
         return item.id !== userToChange[0].id;
     });
     listWithoutUserToChange.push(userToChange[0]);
-    console.log(listWithoutUserToChange);
     setUsers(listWithoutUserToChange);
+};
+
+let setActiveUser = (user) => {
+    localStorage.setItem("activeUser", JSON.stringify(user));
+};
+
+let getActiveUser = () => {
+    return localStorage.getItem("activeUser");
+};
+
+let disableActiveUser = () => {
+    localStorage.removeItem("activeUser");
 };
 
 let initData = () => {
@@ -90,4 +100,7 @@ module.exports = {
     removeUser,
     setLastLogin,
     isInited,
+    setActiveUser,
+    getActiveUser,
+    disableActiveUser,
 };

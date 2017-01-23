@@ -49,13 +49,12 @@ function validateFail() {
 }
 
 function validateSuccess(user) {
+    userData.setActiveUser(user);
+    userData.setLastLogin(user);
+    var dataForUser = renderer.getDataForGroup(user.group);
     if (user.group === 'admin') {
-        var dataForAdmin = renderer.getDataForGroup(user.group);
-        userData.setLastLogin(user);
-        adminRole.authAsAdmin(user, dataForAdmin.data);
+        adminRole.authAsAdmin(user, dataForUser.data);
     } else if (user.group === 'client') {
-        var dataForUser = renderer.getDataForGroup(user.group);
-        userData.setLastLogin(user);
         userRole.authAsUser(user, dataForUser.data);
     }
 }
