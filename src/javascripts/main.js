@@ -2,8 +2,7 @@
  * Created by Олександр on 08.01.2017.
  */
 "use strict";
-import buildLoginForm from './login/loginForm.js';
-import dataProvider from './data/dataProvider';
+ import loginPage from './login/loginPage';
 
-buildLoginForm.createLoginForm();
-dataProvider.loadAllData();
+loginPage.initLoginPage();
+
