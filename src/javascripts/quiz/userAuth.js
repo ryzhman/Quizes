@@ -121,7 +121,7 @@ window.onhashchange = function () {
     } else {
         hashChangeHandler.handleHashChange(window.location.hash);
     }
-}
+};
 
 module.exports = {
     authAsUser: authAsUser,

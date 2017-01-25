@@ -59,21 +59,21 @@ let initData = () => {
             "text": "What city is a capital of Ukraine?",
             "options": ["Kyiv", "Brussel", "Tokio", "Lviv"],
             "answer": ["Kyiv"],
-            "type": types['opt']
+            "type": types.opt
         },
         {
             "id": 1,
             "text": "Type basic parent object in JS?",
             "options": [],
             "answer": ["Object"],
-            "type": types['open']
+            "type": types.open
         },
         {
             "id": 2,
             "text": "How to create new String in JS?",
             "options": ["'str'", "new String(string)", 'String("str")', 'stringify("str")'],
             "answer": ["'str'", 'new String(string)'],
-            "type": types['multiple']
+            "type": types.multiple
         }
     ];
     setQuestions(questionsArray);

@@ -19,7 +19,7 @@ window.onhashchange = function () {
     } else {
         hashChangeHandler.handleHashChange(window.location.hash, usersList, quizesList, loginData);
     }
-}
+};
 
 let createRemoveQuizButton = () => {
     let buttons = document.getElementsByClassName('removeQuiz');
@@ -60,7 +60,7 @@ let addNewUser = (event) => {
         "pass": pswd,
         "group": group,
     };
-    newUser["access"] = (group === 'admin' ? 'unlimited' : 'limited');
+    newUser.access = (group === 'admin' ? 'unlimited' : 'limited');
     userData.addUser(newUser);
 
     refreshBodyDiv();
@@ -116,12 +116,8 @@ let refreshBodyDiv = () => {
     let usersList = userData.getUsers();
     let quizesList = questData.getQuestions();
 
-    $(bodyDiv).html(adminTmpl.usersListTmpl(usersList)
-        + adminTmpl.createAddUserButton()
-        + "\n\n"
-        + adminTmpl.quizesListTmpl(quizesList)
-        + adminTmpl.createAddQuizButton()
-    );
+    $(bodyDiv)
+        .html(adminTmpl.usersListTmpl(usersList) + adminTmpl.createAddUserButton() + adminTmpl.quizesListTmpl(quizesList) + adminTmpl.createAddQuizButton());
 
     createRemoveQuizButton();
     createRemoveUserButton();

@@ -3,16 +3,11 @@
  */
 "use strict";
 
-var _loginForm = require('./login/loginForm.js');
+var _loginPage = require("./login/loginPage");
 
-var _loginForm2 = _interopRequireDefault(_loginForm);
-
-var _dataProvider = require('./data/dataProvider');
-
-var _dataProvider2 = _interopRequireDefault(_dataProvider);
+var _loginPage2 = _interopRequireDefault(_loginPage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_loginForm2.default.createLoginForm();
-_dataProvider2.default.loadAllData();
+_loginPage2.default.initLoginPage();
 //# sourceMappingURL=main.js.map
