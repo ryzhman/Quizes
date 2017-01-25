@@ -11,14 +11,14 @@ let handleHashChange = (hash, usersList, quizesList, loginData) => {
     console.log('in hashchange');
     if (hash === '#main') {
         console.log(login);
-        login.initLoginPage();
+        // login.initLoginPage();
     } else if (hash === '#quiz') {
         console.log(userAuth);
-        userAuth.displayQuiz();
+        // userAuth.displayQuiz();
     } else if (hash === '#adminPage') {
-        let data = [usersList, quizesList];
-        console.log(adminAuth);
-        adminAuth.authAsAdmin(userData.getActiveUser(), data);
+        // let data = [usersList, quizesList];
+        // console.log(adminAuth);
+        // adminAuth.authAsAdmin(userData.getActiveUser(), data);
     }
 };
 

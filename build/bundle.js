@@ -10418,14 +10418,14 @@
 	    console.log('in hashchange');
 	    if (hash === '#main') {
 	        console.log(_loginPage2.default);
-	        _loginPage2.default.initLoginPage();
+	        // login.initLoginPage();
 	    } else if (hash === '#quiz') {
 	        console.log(_userAuth2.default);
-	        _userAuth2.default.displayQuiz();
+	        // userAuth.displayQuiz();
 	    } else if (hash === '#adminPage') {
 	        var data = [usersList, quizesList];
 	        console.log(_adminAuth2.default);
-	        _adminAuth2.default.authAsAdmin(_users2.default.getActiveUser(), data);
+	        // adminAuth.authAsAdmin(userData.getActiveUser(), data);
 	    }
 	};
 
