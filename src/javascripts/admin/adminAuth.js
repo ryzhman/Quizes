@@ -134,7 +134,7 @@ let refreshBodyDiv = () => {
     $('#pswd2').mouseleave(checkPasswordMatch);
 
     previousLocation = window.location.hash;
-    window.location.hash = "#adminPage.html";
+    window.location.hash = "#adminPage";
 };
 
 function authAsAdmin(user, data) {

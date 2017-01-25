@@ -9,13 +9,13 @@ import userData from '../javascripts/data/users';
 
 let handleHashChange = (hash, usersList, quizesList, loginData) => {
     console.log('in hashchange');
-    if (hash === '#main.html') {
+    if (hash === '#main') {
         console.log(login);
         login.initLoginPage();
-    } else if (hash === '#quiz.html') {
+    } else if (hash === '#quiz') {
         console.log(userAuth);
         userAuth.displayQuiz();
-    } else if (hash === '#adminPage.html') {
+    } else if (hash === '#adminPage') {
         let data = [usersList, quizesList];
         console.log(adminAuth);
         adminAuth.authAsAdmin(userData.getActiveUser(), data);

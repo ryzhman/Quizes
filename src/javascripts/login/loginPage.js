@@ -8,7 +8,7 @@ import dataProvider from '../data/dataProvider';
 let initLoginPage = () => {
     buildLoginForm.createLoginForm();
     dataProvider.loadAllData();
-    window.location.hash = '#main.html';
+    window.location.hash = '#main';
 };
 
 module.exports = {

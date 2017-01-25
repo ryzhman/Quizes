@@ -100,7 +100,7 @@ function authAsUser(user, data) {
 
     $("#quiz").submit(evalTest);
     previousLocation = window.location.hash;
-    window.location.hash = "#quiz.html";
+    window.location.hash = "#quiz";
 }
 
 let displayQuiz = ()=>{
