@@ -10423,8 +10423,8 @@
 	        console.log(_userAuth2.default);
 	        // userAuth.displayQuiz();
 	    } else if (hash === '#adminPage') {
-	        var data = [usersList, quizesList];
-	        console.log(_adminAuth2.default);
+	        // let data = [usersList, quizesList];
+	        // console.log(adminAuth);
 	        // adminAuth.authAsAdmin(userData.getActiveUser(), data);
 	    }
 	};

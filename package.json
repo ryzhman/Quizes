@@ -2,9 +2,9 @@
   "name": "quizes",
   "version": "1.0.0",
   "description": "Web application for teting one's knowladge",
-  "main": "index.js",
+  "main": "./srv/javascripts/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack && uglifyjs ../build/bundle.js -c -m -o ../build/bundle.min.js --source-map ../build/bundle.min.js.map"
   },
   "author": "Alex Ryzhkov",
   "license": "ISC",
@@ -20,7 +20,9 @@
     "babel-preset-react": "^6.16.0",
     "hashchange": "^1.0.0",
     "html-template-tag": "^1.0.0",
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "uglify-js": "^2.7.5",
+    "webpack-uglify-js-plugin": "^1.1.9"
   },
   "repository": {
     "type": "git",
