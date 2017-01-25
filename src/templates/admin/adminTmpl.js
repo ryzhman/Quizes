@@ -22,7 +22,7 @@ const usersListTmpl = uList => html`
             <th>Group</th>
             <th>Remove</th>
             ${uList.map(usr => html`
-                <tr ${usr.id % 2 ? `` : `class="odd"`}>
+                <tr>
                     <td>${usr.name}</td>
                     <td>${usr.pass}</td>
                     <td>${usr.access}</td>
@@ -44,7 +44,7 @@ const quizesListTmpl = qList => html`
             <th>Type of a question</th>
             <th>Remove</th>
             ${qList.map(quiz => html`
-                <tr ${quiz.id % 2 ? `` : `class="odd"`}>
+                <tr>
                 <td>${quiz.text}</td>
                 <td>
                     <ul>

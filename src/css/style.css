@@ -145,6 +145,6 @@ caption, h2{
     padding: 20%;
 }
 
-#hor-zebra .odd {
+#hor-zebra tr:nth-of-type(even) {
     background: #e8edff;
 }
