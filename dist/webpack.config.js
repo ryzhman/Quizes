@@ -24,12 +24,7 @@ module.exports = {
             query: {
                 presets: ['es2015', 'react']
             }
-        }],
-        resolve: {
-            alias: {
-                handlebars: 'handlebars/dist/Handlebars.min.js'
-            }
-        }
+        }]
     }
 };
 //# sourceMappingURL=webpack.config.js.map

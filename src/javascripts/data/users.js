@@ -1,5 +1,6 @@
 "use strict";
 import $ from 'jquery';
+import moment from 'moment';
 
 let setUsers = (list) => {
     let parsedList = JSON.stringify(list);
@@ -45,9 +46,9 @@ let setUserProperty = (user, propertyName, value) => {
         return item.id === user.id;
     });
     if (userToChange[0].hasOwnProperty(propertyName)) {
-        if (propertyName !== 'results') {
-            userToChange[0][propertyName] = new Date().toString();
-        } else {
+        if (propertyName === 'lastVisit') {
+            userToChange[0][propertyName] = moment().format('DD/MM/YYYY HH:mm');
+        } else if(propertyName === 'results'){
             userToChange[0][propertyName].push(value);
         }
         let listWithoutUserToChange = $.grep(getUsers(), item => {
@@ -101,6 +102,16 @@ let setInited = () => {
     localStorage.setItem('isUsersDBInited', true);
 };
 
+let prepareDataForChart = (user) => {
+    let datesForLabels = [];
+    let scores = [];
+    user.results.map(item => {
+        datesForLabels.push(item.date);
+        scores.push(item.score * 100);
+    });
+    return [datesForLabels, scores];
+};
+
 module.exports = {
     getUsers,
     addUser,
@@ -112,4 +123,5 @@ module.exports = {
     setActiveUser,
     getActiveUser,
     disableActiveUser,
+    prepareDataForChart,
 };

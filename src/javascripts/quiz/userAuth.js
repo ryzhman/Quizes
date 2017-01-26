@@ -7,6 +7,7 @@ import $ from 'jquery';
 import usersData from '../data/users';
 import questionData from '../data/questions';
 import hashChangeHandler from '../../templates/hashHandler';
+import {createScoreStatsChart} from '../../templates/quiz/chartTmpl';
 
 let allQuestions = [];
 let userData = [];
@@ -20,13 +21,13 @@ let restartTest = () => {
     authAsUser(userData, allQuestions);
 };
 
-let evalResults = (result) => {
-    console.log('in evalResults');
+let evalResults = (currentUser, result) => {
     $('#bodyDiv').html(userTemplate.renderResult(result));
     if ($('#tryAgain').length) {
-        console.log($('#tryAgain').length);
         $('#tryAgain').click(restartTest);
     }
+    let datesAndScoreArray = usersData.prepareDataForChart(currentUser);
+    createScoreStatsChart(datesAndScoreArray);
     window.location.href = "#quizResult.html";
 };
 
@@ -87,7 +88,7 @@ let evalTest = (event) => {
         correctAnsw: numberOfCorrectAnw
     };
     usersData.setUserProperty(usersData.getActiveUser(), "results", {'date':usersData.getActiveUser().lastVisit, 'score': (result.correctAnsw/result.total).toPrecision(2)});
-    evalResults(result);
+    evalResults(usersData.getActiveUser(), result);
 };
 
 function authAsUser(user, data) {

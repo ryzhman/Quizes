@@ -28,10 +28,5 @@ module.exports = {
                 }
             }
         ],
-        resolve: {
-            alias: {
-                handlebars: 'handlebars/dist/Handlebars.min.js'
-            }
-        },
     }
 };
