@@ -4,7 +4,7 @@
   "description": "Web application for teting one's knowladge",
   "main": "./srv/javascripts/main.js",
   "scripts": {
-    "build": "webpack && uglifyjs ../build/bundle.js -c -m -o ../build/bundle.min.js --source-map ../build/bundle.min.js.map"
+    "build": "webpack && uglifyjs ./build/bundle.js -c -m -o ./build/bundle.min.js --source-map ./build/bundle.min.js.map"
   },
   "author": "Alex Ryzhkov",
   "license": "ISC",
