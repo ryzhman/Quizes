@@ -309,18 +309,13 @@
 	};
 
 	var setUserProperty = function setUserProperty(user, propertyName, value) {
-	    console.log('in set property');
-	    console.log(user);
 	    var userToChange = _jquery2.default.grep(getUsers(), function (item) {
 	        return item.id === user.id;
 	    });
-	    console.log(userToChange[0]);
 	    if (userToChange[0].hasOwnProperty(propertyName)) {
 	        if (propertyName !== 'results') {
-	            console.log(userToChange[0][propertyName]);
 	            userToChange[0][propertyName] = new Date().toString();
 	        } else {
-	            console.log(userToChange[0][propertyName]);
 	            userToChange[0][propertyName].push(value);
 	        }
 	        var listWithoutUserToChange = _jquery2.default.grep(getUsers(), function (item) {
@@ -10617,6 +10612,10 @@
 
 	var _htmlTemplateTag2 = _interopRequireDefault(_htmlTemplateTag);
 
+	var _users = __webpack_require__(4);
+
+	var _users2 = _interopRequireDefault(_users);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -10659,7 +10658,7 @@
 	};
 
 	var renderResult = function renderResult(result) {
-	    return "\n        " + (result.correctAnsw / result.total > 0.5 ? "\n            <h4>You have passed the test: " + result.correctAnsw + " correct of " + result.total + " questions. \n            <br>Rate of correct answers is " + (result.correctAnsw / result.total).toPrecision(2) + "\n            </h4> \n            " : "\n            <h4>You have not passed the test: only " + result.correctAnsw + " correct of " + result.total + " questions.\n            <br>Rate of correct answers is " + (result.correctAnsw / result.total).toPrecision(2) + "</h4>\n            <p>" + tryAgainButton() + "</p>\n        ") + "\n    ";
+	    return "\n        " + (result.correctAnsw / result.total > 0.5 ? "\n            <h4>You have passed the test: " + result.correctAnsw + " correct of " + result.total + " questions. \n            <br>Rate of correct answers is " + (result.correctAnsw / result.total).toPrecision(2) + "\n            </h4> \n            " : "\n            <h4>You have not passed the test: only " + result.correctAnsw + " correct of " + result.total + " questions.\n            <br>Rate of correct answers is " + (result.correctAnsw / result.total).toPrecision(2) + "</h4>\n            <p>" + tryAgainButton() + "</p>\n        ") + "\n        <p>Your previous score was " + _users2.default.getActiveUser().results[_users2.default.getActiveUser().results.length - 1].score + " and you \n        took that attempt on " + _users2.default.getActiveUser().results[_users2.default.getActiveUser().results.length - 1].date + "</p>\n    ";
 	};
 
 	var tryAgainButton = function tryAgainButton() {

@@ -3,6 +3,7 @@
  */
 "use strict";
 import html from "html-template-tag";
+import userData from '../../javascripts/data/users';
 
 //creates a template for admin greeting
 const userWelcomeInfo = loginDt => {
@@ -86,6 +87,8 @@ const renderResult = (result) => {
             <br>Rate of correct answers is ${(result.correctAnsw/result.total).toPrecision(2)}</h4>
             <p>${tryAgainButton()}</p>
         `}
+        <p>Your previous score was ${userData.getActiveUser().results[userData.getActiveUser().results.length-1].score} and you 
+        took that attempt on ${userData.getActiveUser().results[userData.getActiveUser().results.length-1].date}</p>
     `;
 };
 
