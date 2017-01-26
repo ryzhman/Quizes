@@ -21,9 +21,7 @@ let config = {
     }
 };
 
-
 module.exports = {
-    config,
     main,
     usersList,
     quizesList,

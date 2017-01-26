@@ -22,7 +22,7 @@ let addUser = (user) => {
     let users = getUsers();
     let maxId = getMaxId(users);
     user.id = ++maxId;
-    user.result = [];
+    user.results = [];
     users.push(user);
     setUsers(users);
 };
@@ -42,15 +42,15 @@ let removeUser = (userId) => {
 
 let setUserProperty = (user, propertyName, value) => {
     console.log('in set property');
+    console.log(user);
     let userToChange = $.grep(getUsers(), item => {
         return item.id === user.id;
     });
-    console.log(user.hasOwnProperty(propertyName));
-
-    if (user.hasOwnProperty(propertyName)) {
-        if (propertyName !== 'result') {
+    console.log(userToChange[0]);
+    if (userToChange[0].hasOwnProperty(propertyName)) {
+        if (propertyName !== 'results') {
             console.log(userToChange[0][propertyName]);
-            userToChange[0][propertyName]= new Date().toString();
+            userToChange[0][propertyName] = new Date().toString();
         } else {
             console.log(userToChange[0][propertyName]);
             userToChange[0][propertyName].push(value);
@@ -68,7 +68,7 @@ let setActiveUser = (user) => {
 };
 
 let getActiveUser = () => {
-    return localStorage.getItem("activeUser");
+    return JSON.parse(localStorage.getItem("activeUser"));
 };
 
 let disableActiveUser = () => {

@@ -290,7 +290,7 @@
 	    var users = getUsers();
 	    var maxId = getMaxId(users);
 	    user.id = ++maxId;
-	    user.result = [];
+	    user.results = [];
 	    users.push(user);
 	    setUsers(users);
 	};
@@ -310,13 +310,13 @@
 
 	var setUserProperty = function setUserProperty(user, propertyName, value) {
 	    console.log('in set property');
+	    console.log(user);
 	    var userToChange = _jquery2.default.grep(getUsers(), function (item) {
 	        return item.id === user.id;
 	    });
-	    console.log(user.hasOwnProperty(propertyName));
-
-	    if (user.hasOwnProperty(propertyName)) {
-	        if (propertyName !== 'result') {
+	    console.log(userToChange[0]);
+	    if (userToChange[0].hasOwnProperty(propertyName)) {
+	        if (propertyName !== 'results') {
 	            console.log(userToChange[0][propertyName]);
 	            userToChange[0][propertyName] = new Date().toString();
 	        } else {
@@ -336,7 +336,7 @@
 	};
 
 	var getActiveUser = function getActiveUser() {
-	    return localStorage.getItem("activeUser");
+	    return JSON.parse(localStorage.getItem("activeUser"));
 	};
 
 	var disableActiveUser = function disableActiveUser() {
@@ -10534,7 +10534,6 @@
 	            userAnswer[e] = (0, _jquery2.default)(selected).val();
 	        });
 	        var currentQuestionAnsw = getAnswerForQuestionById(multipleQuestions[_i]);
-	        console.log(currentQuestionAnsw);
 	        areSame = userAnswer.length === currentQuestionAnsw.length && userAnswer.every(function (element, index) {
 	            return element === currentQuestionAnsw[index];
 	        });
@@ -10561,7 +10560,7 @@
 	        total: allQuestions.length,
 	        correctAnsw: numberOfCorrectAnw
 	    };
-	    userData.setUserProperty(user, 'result', { 'date': userData.getLastLogin(), 'score': result.correctAnsw / result.total });
+	    _users2.default.setUserProperty(_users2.default.getActiveUser(), "results", { 'date': _users2.default.getActiveUser().lastVisit, 'score': (result.correctAnsw / result.total).toPrecision(2) });
 	    evalResults(result);
 	};
 
@@ -11093,7 +11092,6 @@
 	};
 
 	module.exports = {
-	    config: config,
 	    main: main,
 	    usersList: usersList,
 	    quizesList: quizesList,

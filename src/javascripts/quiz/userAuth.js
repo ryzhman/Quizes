@@ -67,7 +67,6 @@ let evalTest = (event) => {
             userAnswer[e] = $(selected).val();
         });
         let currentQuestionAnsw = getAnswerForQuestionById(multipleQuestions[i]);
-        console.log(currentQuestionAnsw);
         var areSame = (userAnswer.length === currentQuestionAnsw.length) && userAnswer.every((element, index) => {
                 return element === currentQuestionAnsw[index];
             });
@@ -87,6 +86,7 @@ let evalTest = (event) => {
         total: allQuestions.length,
         correctAnsw: numberOfCorrectAnw
     };
+    usersData.setUserProperty(usersData.getActiveUser(), "results", {'date':usersData.getActiveUser().lastVisit, 'score': (result.correctAnsw/result.total).toPrecision(2)});
     evalResults(result);
 };
 
