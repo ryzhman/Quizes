@@ -8,12 +8,12 @@ import adminAuth from '../javascripts/admin/adminAuth';
 import userData from '../javascripts/data/users';
 
 let handleHashChange = (hash, usersList, quizesList, loginData) => {
-    console.log('in hashchange');
+    // console.log('in hashchange');
     if (hash === '#main') {
-        console.log(login);
+        // console.log(login);
         // login.initLoginPage();
     } else if (hash === '#quiz') {
-        console.log(userAuth);
+        // console.log(userAuth);
         // userAuth.displayQuiz();
     } else if (hash === '#adminPage') {
         // let data = [usersList, quizesList];

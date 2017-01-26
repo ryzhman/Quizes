@@ -22,6 +22,7 @@ let addUser = (user) => {
     let users = getUsers();
     let maxId = getMaxId(users);
     user.id = ++maxId;
+    user.result = [];
     users.push(user);
     setUsers(users);
 };
@@ -31,7 +32,7 @@ let removeUser = (userId) => {
     let listWithoutUser = $.grep(users, (e) => {
         return e.id !== parseInt(userId);
     });
-    if (listWithoutUser.length === (users.length-1)) {
+    if (listWithoutUser.length === (users.length - 1)) {
         setUsers(listWithoutUser);
         return 1;
     } else {
@@ -39,20 +40,30 @@ let removeUser = (userId) => {
     }
 };
 
-let setLastLogin = user => {
+let setUserProperty = (user, propertyName, value) => {
+    console.log('in set property');
     let userToChange = $.grep(getUsers(), item => {
         return item.id === user.id;
     });
-    userToChange[0].lastVisit = new Date().toString();
-    let listWithoutUserToChange = $.grep(getUsers(), item => {
-        return item.id !== userToChange[0].id;
-    });
-    listWithoutUserToChange.push(userToChange[0]);
-    setUsers(listWithoutUserToChange);
+    console.log(user.hasOwnProperty(propertyName));
+
+    if (user.hasOwnProperty(propertyName)) {
+        if (propertyName !== 'result') {
+            console.log(userToChange[0][propertyName]);
+            userToChange[0][propertyName]= new Date().toString();
+        } else {
+            console.log(userToChange[0][propertyName]);
+            userToChange[0][propertyName].push(value);
+        }
+        let listWithoutUserToChange = $.grep(getUsers(), item => {
+            return item.id !== userToChange[0].id;
+        });
+        listWithoutUserToChange.push(userToChange[0]);
+        setUsers(listWithoutUserToChange);
+    }
 };
 
 let setActiveUser = (user) => {
-    localStorage.setItem("activeUser", JSON.stringify(user));
     localStorage.setItem("activeUser", JSON.stringify(user));
 };
 
@@ -71,14 +82,16 @@ let initData = () => {
         "pass": "user",
         "access": "limited",
         "lastVisit": "",
-        "group": 'client'
+        "group": 'client',
+        "results": [],
     }, {
         "id": 1,
         "name": "admin",
         "pass": "admin",
         "access": "unlimited",
         "lastVisit": "",
-        "group": 'admin'
+        "group": 'admin',
+        "results": [],
     }
     ];
     setUsers(usersList);
@@ -86,7 +99,7 @@ let initData = () => {
 };
 
 let isInited = () => {
-  return localStorage.getItem('isUsersDBInited');
+    return localStorage.getItem('isUsersDBInited');
 };
 
 let setInited = () => {
@@ -99,7 +112,7 @@ module.exports = {
     setUsers,
     initData,
     removeUser,
-    setLastLogin,
+    setUserProperty,
     isInited,
     setActiveUser,
     getActiveUser,

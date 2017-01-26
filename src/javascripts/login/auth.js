@@ -50,7 +50,7 @@ function validateFail() {
 
 function validateSuccess(user) {
     userData.setActiveUser(user);
-    userData.setLastLogin(user);
+    userData.setUserProperty(user, "lastVisit");
     var dataForUser = renderer.getDataForGroup(user.group);
     if (user.group === 'admin') {
         adminRole.authAsAdmin(user, dataForUser.data);

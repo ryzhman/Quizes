@@ -246,7 +246,7 @@
 
 	function validateSuccess(user) {
 	    _users4.default.setActiveUser(user);
-	    _users4.default.setLastLogin(user);
+	    _users4.default.setUserProperty(user, "lastVisit");
 	    var dataForUser = _pageRenderer2.default.getDataForGroup(user.group);
 	    if (user.group === 'admin') {
 	        _adminAuth2.default.authAsAdmin(user, dataForUser.data);
@@ -290,6 +290,7 @@
 	    var users = getUsers();
 	    var maxId = getMaxId(users);
 	    user.id = ++maxId;
+	    user.result = [];
 	    users.push(user);
 	    setUsers(users);
 	};
@@ -307,20 +308,30 @@
 	    }
 	};
 
-	var setLastLogin = function setLastLogin(user) {
+	var setUserProperty = function setUserProperty(user, propertyName, value) {
+	    console.log('in set property');
 	    var userToChange = _jquery2.default.grep(getUsers(), function (item) {
 	        return item.id === user.id;
 	    });
-	    userToChange[0].lastVisit = new Date().toString();
-	    var listWithoutUserToChange = _jquery2.default.grep(getUsers(), function (item) {
-	        return item.id !== userToChange[0].id;
-	    });
-	    listWithoutUserToChange.push(userToChange[0]);
-	    setUsers(listWithoutUserToChange);
+	    console.log(user.hasOwnProperty(propertyName));
+
+	    if (user.hasOwnProperty(propertyName)) {
+	        if (propertyName !== 'result') {
+	            console.log(userToChange[0][propertyName]);
+	            userToChange[0][propertyName] = new Date().toString();
+	        } else {
+	            console.log(userToChange[0][propertyName]);
+	            userToChange[0][propertyName].push(value);
+	        }
+	        var listWithoutUserToChange = _jquery2.default.grep(getUsers(), function (item) {
+	            return item.id !== userToChange[0].id;
+	        });
+	        listWithoutUserToChange.push(userToChange[0]);
+	        setUsers(listWithoutUserToChange);
+	    }
 	};
 
 	var setActiveUser = function setActiveUser(user) {
-	    localStorage.setItem("activeUser", JSON.stringify(user));
 	    localStorage.setItem("activeUser", JSON.stringify(user));
 	};
 
@@ -339,14 +350,16 @@
 	        "pass": "user",
 	        "access": "limited",
 	        "lastVisit": "",
-	        "group": 'client'
+	        "group": 'client',
+	        "results": []
 	    }, {
 	        "id": 1,
 	        "name": "admin",
 	        "pass": "admin",
 	        "access": "unlimited",
 	        "lastVisit": "",
-	        "group": 'admin'
+	        "group": 'admin',
+	        "results": []
 	    }];
 	    setUsers(usersList);
 	    setInited();
@@ -366,7 +379,7 @@
 	    setUsers: setUsers,
 	    initData: initData,
 	    removeUser: removeUser,
-	    setLastLogin: setLastLogin,
+	    setUserProperty: setUserProperty,
 	    isInited: isInited,
 	    setActiveUser: setActiveUser,
 	    getActiveUser: getActiveUser,
@@ -10415,12 +10428,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var handleHashChange = function handleHashChange(hash, usersList, quizesList, loginData) {
-	    console.log('in hashchange');
+	    // console.log('in hashchange');
 	    if (hash === '#main') {
-	        console.log(_loginPage2.default);
+	        // console.log(login);
 	        // login.initLoginPage();
 	    } else if (hash === '#quiz') {
-	        console.log(_userAuth2.default);
+	        // console.log(userAuth);
 	        // userAuth.displayQuiz();
 	    } else if (hash === '#adminPage') {
 	        // let data = [usersList, quizesList];
@@ -10548,6 +10561,7 @@
 	        total: allQuestions.length,
 	        correctAnsw: numberOfCorrectAnw
 	    };
+	    userData.setUserProperty(user, 'result', { 'date': userData.getLastLogin(), 'score': result.correctAnsw / result.total });
 	    evalResults(result);
 	};
 
